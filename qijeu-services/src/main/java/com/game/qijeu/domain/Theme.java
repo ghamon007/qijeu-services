@@ -3,7 +3,9 @@ package com.game.qijeu.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Theme extends BaseEntity{
@@ -13,7 +15,8 @@ public class Theme extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "theme_generator")
+	@SequenceGenerator(name="theme_generator", sequenceName = "seq_id_theme", allocationSize=50)	
 	private Long id;
 	
 	@Column(nullable=false,length=32)

@@ -5,11 +5,11 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-
-import org.hibernate.validator.constraints.Email;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Client extends BaseEntity {
@@ -17,10 +17,15 @@ public class Client extends BaseEntity {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8532899483744083103L;
+
+	/**
+	 * 
+	 */
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_generator")
+	@SequenceGenerator(name="client_generator", sequenceName = "seq_id_client", allocationSize=50)	
 	private Long id;
 
 	@Column(nullable = false, length = 50)
@@ -35,14 +40,14 @@ public class Client extends BaseEntity {
 
 	private String pays;
 
-	@Email
-	private String email;
-
 	@OneToMany(mappedBy = "client")
 	private List<Contact> contacts;
 	
 	@ManyToMany
 	private List<Questionnaire> questionnaires;
+	
+	@ManyToMany
+	private List<Equipe> equipes;
 
 	public String getNom() {
 		return nom;
@@ -98,6 +103,14 @@ public class Client extends BaseEntity {
 
 	public void setQuestionnaires(List<Questionnaire> questionnaires) {
 		this.questionnaires = questionnaires;
+	}
+
+	public List<Equipe> getEquipes() {
+		return equipes;
+	}
+
+	public void setEquipes(List<Equipe> equipes) {
+		this.equipes = equipes;
 	}
 
 }

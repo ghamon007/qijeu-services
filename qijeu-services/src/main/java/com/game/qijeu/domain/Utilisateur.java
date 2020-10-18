@@ -1,24 +1,28 @@
 package com.game.qijeu.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import org.hibernate.validator.constraints.Email;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Utilisateur extends BaseEntity {
 
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8246929148276493393L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "utilisateur_generator")
+	@SequenceGenerator(name="utilisateur_generator", sequenceName = "seq_id_utilisateur", allocationSize=50)	
 	private Long id;
 	
 	@Column(nullable=false)
@@ -27,15 +31,16 @@ public class Utilisateur extends BaseEntity {
 	@Column(nullable=false)
 	private String password;
 	
-	@Email
 	@Column(nullable=false)
 	private String email;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(nullable=false,columnDefinition = "ENUM('ADMIN', 'USER')")
-	private PROFIL_UTILISATEUR profil;
+	@ManyToOne
+	private Parametre profil;
 	
-
+	@OneToMany
+	private List<Contact> constacts;
+	
+	
 	public String getLogin() {
 		return login;
 	}
@@ -54,15 +59,16 @@ public class Utilisateur extends BaseEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public PROFIL_UTILISATEUR getProfil() {
+	public Parametre getProfil() {
 		return profil;
 	}
-	public void setProfil(PROFIL_UTILISATEUR profil) {
+	public void setProfil(Parametre profil) {
 		this.profil = profil;
 	}
-
-	enum PROFIL_UTILISATEUR {
-		ADMIN,
-		USER
+	public List<Contact> getConstacts() {
+		return constacts;
+	}
+	public void setConstacts(List<Contact> constacts) {
+		this.constacts = constacts;
 	}
 }

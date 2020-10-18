@@ -2,14 +2,13 @@ package com.game.qijeu.domain;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Version;
 
 @Entity
@@ -21,7 +20,8 @@ public class Question extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_generator")
+	@SequenceGenerator(name="question_generator", sequenceName = "seq_id_question", allocationSize=50)	
 	private Long id;
 	
 	private String libelle;
@@ -30,9 +30,10 @@ public class Question extends BaseEntity{
 	
 	private String metadonnees;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(columnDefinition = "ENUM('BROUILLON', 'VALIDE', 'PUBLIE')")
-	private STATUT_QUESTION statut;
+
+	@ManyToOne
+	private Parametre statut;
+	
 	
 	@Version
 	private int version;
@@ -43,11 +44,6 @@ public class Question extends BaseEntity{
 	@ManyToMany
 	private List<Support> supports;
 
-	enum STATUT_QUESTION {
-		BROUILLON,
-		VALIDE,
-		PUBLIE
-	}
 
 
 	public String getLibelle() {
@@ -80,16 +76,6 @@ public class Question extends BaseEntity{
 	}
 
 
-	public STATUT_QUESTION getStatut() {
-		return statut;
-	}
-
-
-	public void setStatut(STATUT_QUESTION statut) {
-		this.statut = statut;
-	}
-
-
 	public int getVersion() {
 		return version;
 	}
@@ -117,5 +103,15 @@ public class Question extends BaseEntity{
 
 	public void setSupports(List<Support> supports) {
 		this.supports = supports;
+	}
+
+
+	public Parametre getStatut() {
+		return statut;
+	}
+
+
+	public void setStatut(Parametre statut) {
+		this.statut = statut;
 	}
 }

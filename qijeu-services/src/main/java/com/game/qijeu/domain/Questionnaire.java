@@ -5,8 +5,10 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Questionnaire extends BaseEntity{
@@ -17,7 +19,8 @@ public class Questionnaire extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "questionnaire_generator")
+	@SequenceGenerator(name="questionnaire_generator", sequenceName = "seq_id_questionnaire", allocationSize=50)	
 	private Long id;
 	
 	@Column(nullable=false)
