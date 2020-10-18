@@ -1,4 +1,4 @@
-package com.game.qijeu.service;
+package com.game.qijeu.jpa.repository;
 
 import java.util.List;
 

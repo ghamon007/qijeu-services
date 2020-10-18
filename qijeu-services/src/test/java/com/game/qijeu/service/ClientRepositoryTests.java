@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.game.qijeu.domain.Client;
+import com.game.qijeu.jpa.repository.ClientRepository;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
