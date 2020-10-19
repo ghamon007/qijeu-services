@@ -49,6 +49,21 @@ public class Client extends BaseEntity {
 	@ManyToMany
 	private List<Equipe> equipes;
 
+	public Client() {
+	}
+
+	public Client(String nom) {
+		this.nom = nom;
+	}
+
+	public Client(String nom, String adresse, String codePostal, String commune, String pays) {
+		this.nom = nom;
+		this.adresse = adresse;
+		this.codePostal = codePostal;
+		this.commune = commune;
+		this.pays = pays;
+	}
+
 	public String getNom() {
 		return nom;
 	}
@@ -112,5 +127,6 @@ public class Client extends BaseEntity {
 	public void setEquipes(List<Equipe> equipes) {
 		this.equipes = equipes;
 	}
+
 
 }
