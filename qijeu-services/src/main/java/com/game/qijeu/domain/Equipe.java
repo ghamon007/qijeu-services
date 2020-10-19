@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
@@ -32,6 +33,9 @@ public class Equipe extends BaseEntity {
 
 	@OneToMany(mappedBy = "equipe")
 	private List<Contact> contacts;
+
+	@ManyToOne
+	private Client client;
 	
 	@ManyToMany
 	private List<QiJeu> qiJeus;
@@ -51,6 +55,14 @@ public class Equipe extends BaseEntity {
 
 	public void setContacts(List<Contact> contacts) {
 		this.contacts = contacts;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 

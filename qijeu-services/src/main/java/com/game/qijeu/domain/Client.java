@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
@@ -25,7 +24,7 @@ public class Client extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_generator")
-	@SequenceGenerator(name="client_generator", sequenceName = "seq_id_client", allocationSize=50)	
+	@SequenceGenerator(name = "client_generator", sequenceName = "seq_id_client", allocationSize = 50)
 	private Long id;
 
 	@Column(nullable = false, length = 50)
@@ -42,11 +41,11 @@ public class Client extends BaseEntity {
 
 	@OneToMany(mappedBy = "client")
 	private List<Contact> contacts;
-	
-	@ManyToMany
-	private List<Questionnaire> questionnaires;
-	
-	@ManyToMany
+
+	@OneToMany
+	private List<QiJeu> qiJeux;
+
+	@OneToMany
 	private List<Equipe> equipes;
 
 	public Client() {
@@ -112,14 +111,6 @@ public class Client extends BaseEntity {
 		this.contacts = contacts;
 	}
 
-	public List<Questionnaire> getQuestionnaires() {
-		return questionnaires;
-	}
-
-	public void setQuestionnaires(List<Questionnaire> questionnaires) {
-		this.questionnaires = questionnaires;
-	}
-
 	public List<Equipe> getEquipes() {
 		return equipes;
 	}
@@ -128,5 +119,12 @@ public class Client extends BaseEntity {
 		this.equipes = equipes;
 	}
 
+	public List<QiJeu> getQiJeux() {
+		return qiJeux;
+	}
+
+	public void setQiJeux(List<QiJeu> qiJeux) {
+		this.qiJeux = qiJeux;
+	}
 
 }
