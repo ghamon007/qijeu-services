@@ -25,7 +25,7 @@ public class Utilisateur extends BaseEntity {
 	@SequenceGenerator(name="utilisateur_generator", sequenceName = "seq_id_utilisateur", allocationSize=50)	
 	private Long id;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique = true)
 	private String login;
 	
 	@Column(nullable=false)
@@ -36,11 +36,34 @@ public class Utilisateur extends BaseEntity {
 	
 	@ManyToOne
 	private Parametre profil;
+
+	@ManyToOne
+	private Parametre statut;
 	
 	@OneToMany
 	private List<Contact> constacts;
 	
-	
+	public Utilisateur(String login, String password, String email, Parametre profil, Parametre statut) {
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.profil = profil;
+		this.statut = statut;
+	}
+
+	public Utilisateur() {
+	}
+
+	public Utilisateur(String login, String password, Parametre statut) {
+		this.login = login;
+		this.password = password;
+		this.statut = statut;
+	}	
+	public Utilisateur(String login, String password, String email) {
+		this.login = login;
+		this.password = password;
+		this.email = email;
+	}		
 	public String getLogin() {
 		return login;
 	}
@@ -71,4 +94,18 @@ public class Utilisateur extends BaseEntity {
 	public void setConstacts(List<Contact> constacts) {
 		this.constacts = constacts;
 	}
+
+	public Parametre getStatut() {
+		return statut;
+	}
+
+	public void setStatut(Parametre statut) {
+		this.statut = statut;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+
 }

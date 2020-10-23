@@ -127,4 +127,8 @@ public class Client extends BaseEntity {
 		this.qiJeux = qiJeux;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 }

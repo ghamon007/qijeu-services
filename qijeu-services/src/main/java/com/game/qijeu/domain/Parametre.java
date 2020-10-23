@@ -7,8 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.FilterDef;
-
 @Entity
 public class Parametre extends BaseEntity {
 
@@ -17,12 +15,28 @@ public class Parametre extends BaseEntity {
 	 */
 	private static final long serialVersionUID = -4439662100231917533L;
 
+	public Parametre() {
+	}
+	
+	public Parametre(String code, String libelle, String type) {
+		this.code = code;
+		this.libelle = libelle;
+		this.type = type;
+	}
+
+	public Parametre(String code, String libelle, String description, String type) {
+		this.code = code;
+		this.libelle = libelle;
+		this.description = description;
+		this.type = type;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "param_generator")
 	@SequenceGenerator(name="param_generator", sequenceName = "seq_id_param", allocationSize=50)	
 	private Long id;
 
-	@Column(nullable=false,length=32)
+	@Column(nullable=false,length=32,unique = true)
 	private String code;
 
 	@Column(nullable=false,length=32)
@@ -65,5 +79,7 @@ public class Parametre extends BaseEntity {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+
 	
 }
