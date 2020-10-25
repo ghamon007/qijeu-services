@@ -1,6 +1,5 @@
 package com.game.qijeu.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,10 @@ import com.game.qijeu.jpa.repository.QuestionnaireRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +25,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/questionnaire")
@@ -54,13 +60,44 @@ public class QuestionnaireController {
         return new QuestionnaireDto(questionnaire);
     }
 
-    @PostMapping(path = "/create", consumes = { "application/json","multipart/form-data" })
-    public QuestionnaireDto saveQuestionnaire(@RequestBody QuestionnaireDto questionnaireDto) {
-        LOGGER.info(questionnaireDto.toString());
-        Questionnaire questionnaire = new Questionnaire(questionnaireDto);
-        questionnaire = questionnaireRepository.save(questionnaire);
+    @PostMapping(path = "/create", consumes = { "application/json", "multipart/form-data" })
+    public QuestionnaireDto saveQuestionnaire(@RequestParam("fichier") MultipartFile file,
+            @RequestParam("libelle") String libelle, 
+            @RequestParam("description") String description) {
+        // public QuestionnaireDto saveQuestionnaire(@RequestParam QuestionnaireDto
+        // questionnaireDto) {
+        /**
+         * LOGGER.info(questionnaireDto.toString()); Questionnaire questionnaire = new
+         * Questionnaire(questionnaireDto); questionnaire =
+         * questionnaireRepository.save(questionnaire);
+         **/
+        LOGGER.info("Fichier" + file.getOriginalFilename());
+        LOGGER.info("Libelle " + libelle);
+        LOGGER.info("Description " + description);
+        
+        Questionnaire questionnaire = new Questionnaire();
+        questionnaire.setLibelle(libelle);
+        questionnaire.setDescription(description);
+        try {
+            questionnaire.setFichier(file.getBytes());
+            questionnaireRepository.save(questionnaire);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return new QuestionnaireDto(questionnaire);
     }
+
+    @GetMapping("/files/{id}")
+	@ResponseBody
+	public ResponseEntity<Resource> serveFile(@PathVariable Long id) {
+        Questionnaire aQuestionnaire = questionnaireRepository.findById(id)
+                .orElseThrow(() -> new QuestionnaireNotFoundException(id));
+
+		Resource file = new ByteArrayResource(aQuestionnaire.getFichier());
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+				"attachment; filename=\"" + aQuestionnaire.getLibelle()+".zip" + "\"").body(file);
+	}
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
@@ -73,13 +110,13 @@ public class QuestionnaireController {
                 .orElseThrow(() -> new QuestionnaireNotFoundException(id));
         aQuestionnaire.setLibelle(newQuestionnaire.getLibelle());
         aQuestionnaire.setDescription(newQuestionnaire.getDescription());
-        try {
-            aQuestionnaire.setFichier(newQuestionnaire.getFichier().getBytes());
+/**        try {
+            aQuestionnaire.set(newQuestionnaire.getFichier().getBytes());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-		questionnaireRepository.save(aQuestionnaire);
-		return new QuestionnaireDto(aQuestionnaire);
-	}
+        }**/
+        questionnaireRepository.save(aQuestionnaire);
+        return new QuestionnaireDto(aQuestionnaire);
+    }
 }

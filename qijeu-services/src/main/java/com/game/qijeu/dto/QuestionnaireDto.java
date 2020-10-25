@@ -20,7 +20,7 @@ public class QuestionnaireDto {
 
     private Date dateModification;
 
-    private MultipartFile fichier;
+    private String nomFichier;
 
     private List<Long> qiJeuxIds = new ArrayList<>();
 
@@ -81,19 +81,18 @@ public class QuestionnaireDto {
         this.setDescription(questionnaire.getDescription());
         this.setDateCreation(questionnaire.getDateCreation());
         this.setDateModification(questionnaire.getDateModification());
-        
+        this.setNomFichier(questionnaire.getLibelle()+".zip");
 //        this.setFichier(questionnaire.getFichier());
         
     }
 
-    public MultipartFile getFichier() {
-        return fichier;
+    public String getNomFichier() {
+        return nomFichier;
     }
 
-    public void setFichier(MultipartFile fichier) {
-        this.fichier = fichier;
+    public void setNomFichier(String nomFichier) {
+        this.nomFichier = nomFichier;
     }
 
-
-    
+   
 }

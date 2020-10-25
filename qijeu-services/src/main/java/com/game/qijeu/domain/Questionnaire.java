@@ -90,5 +90,8 @@ public class Questionnaire extends BaseEntity {
 			e.printStackTrace();
 		}
 	}
+
+	public Questionnaire() {
+	}
 	
 }
