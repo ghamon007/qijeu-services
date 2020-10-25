@@ -1,7 +1,9 @@
 package com.game.qijeu.config;
 
+import com.game.qijeu.domain.Client;
 import com.game.qijeu.domain.Parametre;
 import com.game.qijeu.domain.Utilisateur;
+import com.game.qijeu.jpa.repository.ClientRepository;
 import com.game.qijeu.jpa.repository.ParametreRepository;
 import com.game.qijeu.jpa.repository.UtilisateurRepository;
 
@@ -17,7 +19,7 @@ class LoadDatabase {
   private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
   @Bean
-  CommandLineRunner initDatabase(ParametreRepository repository, UtilisateurRepository userRepository) {
+  CommandLineRunner initDatabase(ParametreRepository repository, UtilisateurRepository userRepository, ClientRepository clientRepository) {
 
     return args -> {
       log.info("Preloading " + repository.save(new Parametre("PROFIL_ADMIN", "Administrateur", "PROFIL")));
@@ -25,7 +27,8 @@ class LoadDatabase {
       log.info("Preloading " + repository.save(new Parametre("STATUT_ACTIF", "Actif", "STATUT")));
       log.info("Preloading " + repository.save(new Parametre("STATUT_BLOQUE", "Bloqué", "STATUT")));
       log.info("Preloading " + repository.save(new Parametre("STATUT_INIT", "Initialisé", "STATUT")));
-      log.info("Preloading " + userRepository.save(new Utilisateur("admin", "admin", "guillaume.hamon@gmail.com")));
+      log.info("Preloading " + userRepository.save(new Utilisateur("admin", "admin", "guillaume.hamon@gmail.com", "ghamon@test.fr","0663366705","0950880929")));
+      log.info("Preloading " + clientRepository.save(new Client("Bar de test", "Bd Alsace Lorraine", "31000", "Toulouse","France")));
 
     };
   }

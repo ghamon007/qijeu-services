@@ -31,45 +31,47 @@ public class UtilisateurController {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(UtilisateurController.class);
 
-    @Autowired
+	@Autowired
 	UtilisateurRepository utilisateurRepository;
 
 	@Autowired
 	ParametreRepository parametreRepository;
 
-    @PostMapping("/login")
+	@PostMapping("/login")
 	public Utilisateur login(@RequestBody Utilisateur utilisateur) {
-		LOGGER.info("Login de l'utilisateur : "+ utilisateur.getLogin());
-		return utilisateurRepository.findByLoginAndPassword(utilisateur.getLogin(), utilisateur.getPassword()).orElseThrow(() -> new UtilisateurNotFoundException(utilisateur.getLogin(), utilisateur.getPassword()));
+		LOGGER.info("Login de l'utilisateur : " + utilisateur.getLogin());
+		return utilisateurRepository.findByLoginAndPassword(utilisateur.getLogin(), utilisateur.getPassword())
+				.orElseThrow(() -> new UtilisateurNotFoundException(utilisateur.getLogin(), utilisateur.getPassword()));
 	}
 
-
-    @GetMapping("/list")
+	@GetMapping("/list")
 	public List<UtilisateurDto> all() {
 		List<UtilisateurDto> result = new ArrayList<>();
-		
+
 		for (Utilisateur utilisateur : utilisateurRepository.findAll()) {
-			UtilisateurDto utilisateurDto  = new UtilisateurDto(utilisateur);
+			UtilisateurDto utilisateurDto = new UtilisateurDto(utilisateur);
 			result.add(utilisateurDto);
 		}
 		return result;
 	}
 
-  
-    @GetMapping(path = "/{id}", produces = "application/json")
+	@GetMapping(path = "/{id}", produces = "application/json")
 	public UtilisateurDto oneByid(@PathVariable Long id) {
 		Optional<Utilisateur> utilisateurPresent = utilisateurRepository.findById(id);
-		UtilisateurDto utilisateurDto = (utilisateurPresent.isPresent()? new UtilisateurDto(utilisateurPresent.get()):null);
+		UtilisateurDto utilisateurDto = (utilisateurPresent.isPresent() ? new UtilisateurDto(utilisateurPresent.get())
+				: null);
 		return utilisateurDto;
 	}
 
 	@PostMapping("/create")
 	public Utilisateur saveUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
-		Utilisateur utilisateur = new Utilisateur(utilisateurDto.getLogin(), utilisateurDto.getPassword(), utilisateurDto.getEmail());
+		Utilisateur utilisateur = new Utilisateur(utilisateurDto.getLogin(), utilisateurDto.getPassword(),
+				utilisateurDto.getEmail1(), utilisateurDto.getEmail2(), utilisateurDto.getTelephone1(),
+				utilisateurDto.getTelephone2());
 		Optional<Parametre> aStatut = parametreRepository.findByCode(utilisateurDto.getCodeStatut());
-		utilisateur.setStatut(aStatut.isPresent()?aStatut.get():null);
+		utilisateur.setStatut(aStatut.isPresent() ? aStatut.get() : null);
 		Optional<Parametre> aProfil = parametreRepository.findByCode(utilisateurDto.getCodeProfil());
-		utilisateur.setProfil(aProfil.isPresent()?aProfil.get():null);
+		utilisateur.setProfil(aProfil.isPresent() ? aProfil.get() : null);
 		return utilisateurRepository.save(utilisateur);
 	}
 
@@ -81,16 +83,20 @@ public class UtilisateurController {
 	@PutMapping("/{id}")
 	public UtilisateurDto replace(@RequestBody UtilisateurDto newUtilisateur, @PathVariable Long id) {
 		Optional<Utilisateur> aUtilisateurPresent = utilisateurRepository.findById(id);
-		Utilisateur aUtilisateur = (aUtilisateurPresent.isPresent()?aUtilisateurPresent.get():new Utilisateur());
-        aUtilisateur.setLogin(newUtilisateur.getLogin());
-        aUtilisateur.setPassword(newUtilisateur.getPassword());
-		aUtilisateur.setEmail(newUtilisateur.getEmail());
-		Optional<Parametre> aStatut =	 parametreRepository.findByCode(newUtilisateur.getCodeStatut());
-		Optional<Parametre> aProfil =	 parametreRepository.findByCode(newUtilisateur.getCodeProfil());
-        aUtilisateur.setProfil(aProfil.isPresent()?aProfil.get():null);
-        aUtilisateur.setStatut(aStatut.isPresent()?aStatut.get():null);
+		Utilisateur aUtilisateur = (aUtilisateurPresent.isPresent() ? aUtilisateurPresent.get() : new Utilisateur());
+		aUtilisateur.setLogin(newUtilisateur.getLogin());
+		aUtilisateur.setPassword(newUtilisateur.getPassword());
+		aUtilisateur.setEmail1(newUtilisateur.getEmail1());
+		aUtilisateur.setEmail2(newUtilisateur.getEmail2());
+		aUtilisateur.setTelephone1(newUtilisateur.getTelephone1());
+		aUtilisateur.setTelephone2(newUtilisateur.getTelephone2());
+
+		Optional<Parametre> aStatut = parametreRepository.findByCode(newUtilisateur.getCodeStatut());
+		Optional<Parametre> aProfil = parametreRepository.findByCode(newUtilisateur.getCodeProfil());
+		aUtilisateur.setProfil(aProfil.isPresent() ? aProfil.get() : null);
+		aUtilisateur.setStatut(aStatut.isPresent() ? aStatut.get() : null);
 		utilisateurRepository.save(aUtilisateur);
 		return newUtilisateur;
 	}
 
-}    
+}

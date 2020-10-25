@@ -1,5 +1,6 @@
 package com.game.qijeu.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+
+import com.game.qijeu.dto.ClientDto;
 
 @Entity
 public class Client extends BaseEntity {
@@ -39,11 +42,16 @@ public class Client extends BaseEntity {
 
 	private String pays;
 
-	@OneToMany(mappedBy = "client")
-	private List<Contact> contacts;
+	private String email1;
+
+	private String email2;
+
+	private String telephone1;
+
+	private String telephone2;
 
 	@OneToMany
-	private List<QiJeu> qiJeux;
+	private List<QiJeu> qiJeux = new ArrayList<>();
 
 	@OneToMany
 	private List<Equipe> equipes;
@@ -61,6 +69,18 @@ public class Client extends BaseEntity {
 		this.codePostal = codePostal;
 		this.commune = commune;
 		this.pays = pays;
+	}
+
+	public Client(ClientDto clientDto) {
+		this.nom = clientDto.getNom();
+		this.adresse = clientDto.getAdresse();
+		this.codePostal = clientDto.getCodePostal();
+		this.commune = clientDto.getCommune();
+		this.pays = clientDto.getPays();
+		this.email1 = clientDto.getEmail1();
+		this.email2 = clientDto.getEmail2();
+		this.telephone1 = clientDto.getTelephone1();
+		this.telephone2 = clientDto.getTelephone2();
 	}
 
 	public String getNom() {
@@ -103,13 +123,6 @@ public class Client extends BaseEntity {
 		this.pays = pays;
 	}
 
-	public List<Contact> getContacts() {
-		return contacts;
-	}
-
-	public void setContacts(List<Contact> contacts) {
-		this.contacts = contacts;
-	}
 
 	public List<Equipe> getEquipes() {
 		return equipes;
@@ -129,6 +142,38 @@ public class Client extends BaseEntity {
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getEmail1() {
+		return email1;
+	}
+
+	public void setEmail1(String email1) {
+		this.email1 = email1;
+	}
+
+	public String getEmail2() {
+		return email2;
+	}
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+
+	public String getTelephone1() {
+		return telephone1;
+	}
+
+	public void setTelephone1(String telephone1) {
+		this.telephone1 = telephone1;
+	}
+
+	public String getTelephone2() {
+		return telephone2;
+	}
+
+	public void setTelephone2(String telephone2) {
+		this.telephone2 = telephone2;
 	}
 
 }

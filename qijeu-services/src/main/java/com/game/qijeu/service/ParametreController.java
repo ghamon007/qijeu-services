@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.game.qijeu.domain.Parametre;
 import com.game.qijeu.exception.ClientNotFoundException;
-import com.game.qijeu.jpa.repository.ContactRepository;
 import com.game.qijeu.jpa.repository.ParametreRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,6 @@ public class ParametreController {
 	@Autowired
 	ParametreRepository parametreRepository;
 
-	@Autowired
-	ContactRepository contactRepository;
 
 	@GetMapping("/list")
 	public List<Parametre> all() {

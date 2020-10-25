@@ -44,6 +44,8 @@ public class Question extends BaseEntity{
 	@ManyToMany
 	private List<Support> supports;
 
+	@ManyToMany
+	private List<Questionnaire> questionnaires;
 
 
 	public String getLibelle() {
@@ -113,5 +115,13 @@ public class Question extends BaseEntity{
 
 	public void setStatut(Parametre statut) {
 		this.statut = statut;
+	}
+
+	public List<Questionnaire> getQuestionnaires() {
+		return questionnaires;
+	}
+
+	public void setQuestionnaires(List<Questionnaire> questionnaires) {
+		this.questionnaires = questionnaires;
 	}
 }

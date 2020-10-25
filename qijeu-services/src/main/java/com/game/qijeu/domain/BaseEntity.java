@@ -25,13 +25,13 @@ public abstract class BaseEntity implements Serializable {
 	@Column(insertable = false, updatable = true)
 	private Date dateModification;
 	
-	@ManyToOne
+	/**@ManyToOne
 	@JoinColumn(insertable = true, updatable = false)
 	private Utilisateur utilisateurCreation;
 
 	@ManyToOne
 	@JoinColumn(insertable = false, updatable = true)
-	private Utilisateur utilisateurModification;
+	private Utilisateur utilisateurModification;**/
 	
 	public Date getDateCreation() {
 		return dateCreation;
@@ -49,6 +49,7 @@ public abstract class BaseEntity implements Serializable {
 		this.dateModification = dateModification;
 	}
 
+	/**
 	public Utilisateur getUtilisateurCreation() {
 		return utilisateurCreation;
 	}
@@ -64,6 +65,7 @@ public abstract class BaseEntity implements Serializable {
 	public void setUtilisateurModification(Utilisateur utilisateurModification) {
 		this.utilisateurModification = utilisateurModification;
 	}
+	**/
 	
 	@PrePersist
 	void preInsert() {

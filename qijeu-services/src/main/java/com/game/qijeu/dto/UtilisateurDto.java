@@ -18,7 +18,13 @@ public class UtilisateurDto implements Serializable{
 	
 	private String password;
 	
-	private String email;
+    private String email1;
+    
+    private String email2;
+
+    private String telephone1;
+
+    private String telephone2;
 
     private String codeStatut;
 
@@ -52,14 +58,6 @@ public class UtilisateurDto implements Serializable{
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getCodeStatut() {
         return codeStatut;
     }
@@ -80,7 +78,10 @@ public class UtilisateurDto implements Serializable{
         this.id = utilisateur.getId();
         this.login = utilisateur.getLogin();
         this.password = utilisateur.getPassword();
-        this.email = utilisateur.getEmail();
+        this.email1 = utilisateur.getEmail1();
+        this.email2 = utilisateur.getEmail2();
+        this.telephone1 = utilisateur.getTelephone1();
+        this.telephone2 = utilisateur.getTelephone2();
         this.codeProfil = (utilisateur.getProfil()!=null?utilisateur.getProfil().getCode():null);
         this.codeStatut = (utilisateur.getStatut()!=null?utilisateur.getStatut().getCode():null);
         this.dateCreation = utilisateur.getDateCreation();
@@ -105,6 +106,38 @@ public class UtilisateurDto implements Serializable{
 
     public void setDateModification(Date dateModification) {
         this.dateModification = dateModification;
+    }
+
+    public String getEmail1() {
+        return email1;
+    }
+
+    public void setEmail1(String email1) {
+        this.email1 = email1;
+    }
+
+    public String getEmail2() {
+        return email2;
+    }
+
+    public void setEmail2(String email2) {
+        this.email2 = email2;
+    }
+
+    public String getTelephone1() {
+        return telephone1;
+    }
+
+    public void setTelephone1(String telephone1) {
+        this.telephone1 = telephone1;
+    }
+
+    public String getTelephone2() {
+        return telephone2;
+    }
+
+    public void setTelephone2(String telephone2) {
+        this.telephone2 = telephone2;
     }
 
     
