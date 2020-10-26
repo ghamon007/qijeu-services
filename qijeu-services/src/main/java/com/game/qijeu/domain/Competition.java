@@ -12,8 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.game.qijeu.dto.CompetitionDto;
+
 @Entity
-public class Saison extends BaseEntity {
+public class Competition extends BaseEntity {
 
 	/**
 	 * 
@@ -21,8 +23,8 @@ public class Saison extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "saison_generator")
-	@SequenceGenerator(name="saison_generator", sequenceName = "seq_id_saison", allocationSize=50)	
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "competition_generator")
+	@SequenceGenerator(name="competition_generator", sequenceName = "seq_id_competition", allocationSize=50)	
 	private Long id;
 
 	@Column(nullable = false, length = 50)
@@ -89,6 +91,24 @@ public class Saison extends BaseEntity {
 
 	public void setClient(Client client) {
 		this.client = client;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Competition() {
+	}
+
+	public Competition(CompetitionDto competitionDto) {
+		this.id = competitionDto.getId();
+		this.nom = competitionDto.getNom();
+		this.dateDebut = competitionDto.getDateDebut();
+		this.dateFin = competitionDto.getDateFin();
 	}
 	
 }

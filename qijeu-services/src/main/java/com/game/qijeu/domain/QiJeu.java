@@ -27,7 +27,7 @@ public class QiJeu extends BaseEntity {
 	
 	
 	@ManyToOne
-	private Saison saison;
+	private Competition saison;
 	
 	private Date dateQiJeu;
 	
@@ -51,11 +51,11 @@ public class QiJeu extends BaseEntity {
 		this.resultats = resultats;
 	}
 
-	public Saison getSaison() {
+	public Competition getSaison() {
 		return saison;
 	}
 
-	public void setSaison(Saison saison) {
+	public void setSaison(Competition saison) {
 		this.saison = saison;
 	}
 

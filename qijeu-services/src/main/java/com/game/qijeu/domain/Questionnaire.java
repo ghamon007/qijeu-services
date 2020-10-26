@@ -83,12 +83,12 @@ public class Questionnaire extends BaseEntity {
 		this.id = questionnaireDto.getId();
 		this.libelle = questionnaireDto.getLibelle();
 		this.description = questionnaireDto.getDescription();
-		try {
+/**		try {
 			this.fichier = questionnaireDto.getFichier().getBytes();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}**/
 	}
 
 	public Questionnaire() {
