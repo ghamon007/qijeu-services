@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.game.qijeu.domain.Client;
 import com.game.qijeu.domain.Parametre;
 import com.game.qijeu.domain.Utilisateur;
 import com.game.qijeu.dto.UtilisateurDto;
 import com.game.qijeu.exception.UtilisateurNotFoundException;
+import com.game.qijeu.jpa.repository.ClientRepository;
 import com.game.qijeu.jpa.repository.ParametreRepository;
 import com.game.qijeu.jpa.repository.UtilisateurRepository;
 
@@ -37,6 +39,9 @@ public class UtilisateurController {
 	@Autowired
 	ParametreRepository parametreRepository;
 
+	@Autowired
+	ClientRepository clientRepository;
+
 	@PostMapping("/login")
 	public Utilisateur login(@RequestBody Utilisateur utilisateur) {
 		LOGGER.info("Login de l'utilisateur : " + utilisateur.getLogin());
@@ -64,15 +69,16 @@ public class UtilisateurController {
 	}
 
 	@PostMapping("/create")
-	public Utilisateur saveUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
-		Utilisateur utilisateur = new Utilisateur(utilisateurDto.getLogin(), utilisateurDto.getPassword(),
-				utilisateurDto.getEmail1(), utilisateurDto.getEmail2(), utilisateurDto.getTelephone1(),
-				utilisateurDto.getTelephone2());
+	public UtilisateurDto saveUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
+		Utilisateur utilisateur = new Utilisateur(utilisateurDto);
 		Optional<Parametre> aStatut = parametreRepository.findByCode(utilisateurDto.getCodeStatut());
 		utilisateur.setStatut(aStatut.isPresent() ? aStatut.get() : null);
 		Optional<Parametre> aProfil = parametreRepository.findByCode(utilisateurDto.getCodeProfil());
 		utilisateur.setProfil(aProfil.isPresent() ? aProfil.get() : null);
-		return utilisateurRepository.save(utilisateur);
+		Optional<Client> aClient = clientRepository.findById(utilisateurDto.getIdClient());
+		utilisateur.setClient(aClient.isPresent() ? aClient.get() : null);
+		utilisateurRepository.save(utilisateur);
+		return utilisateurDto;
 	}
 
 	@DeleteMapping("/{id}")
@@ -86,15 +92,14 @@ public class UtilisateurController {
 		Utilisateur aUtilisateur = (aUtilisateurPresent.isPresent() ? aUtilisateurPresent.get() : new Utilisateur());
 		aUtilisateur.setLogin(newUtilisateur.getLogin());
 		aUtilisateur.setPassword(newUtilisateur.getPassword());
-		aUtilisateur.setEmail1(newUtilisateur.getEmail1());
-		aUtilisateur.setEmail2(newUtilisateur.getEmail2());
-		aUtilisateur.setTelephone1(newUtilisateur.getTelephone1());
-		aUtilisateur.setTelephone2(newUtilisateur.getTelephone2());
 
 		Optional<Parametre> aStatut = parametreRepository.findByCode(newUtilisateur.getCodeStatut());
 		Optional<Parametre> aProfil = parametreRepository.findByCode(newUtilisateur.getCodeProfil());
+		Optional<Client> aClient = clientRepository.findById(newUtilisateur.getIdClient());
+
 		aUtilisateur.setProfil(aProfil.isPresent() ? aProfil.get() : null);
 		aUtilisateur.setStatut(aStatut.isPresent() ? aStatut.get() : null);
+		aUtilisateur.setClient(aClient.isPresent() ? aClient.get() : null);
 		utilisateurRepository.save(aUtilisateur);
 		return newUtilisateur;
 	}

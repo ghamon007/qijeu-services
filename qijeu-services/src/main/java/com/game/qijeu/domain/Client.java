@@ -51,9 +51,6 @@ public class Client extends BaseEntity {
 	private String telephone2;
 
 	@OneToMany
-	private List<QiJeu> qiJeux = new ArrayList<>();
-
-	@OneToMany
 	private List<Equipe> equipes;
 
 	public Client() {
@@ -132,13 +129,6 @@ public class Client extends BaseEntity {
 		this.equipes = equipes;
 	}
 
-	public List<QiJeu> getQiJeux() {
-		return qiJeux;
-	}
-
-	public void setQiJeux(List<QiJeu> qiJeux) {
-		this.qiJeux = qiJeux;
-	}
 
 	public Long getId() {
 		return id;
@@ -175,5 +165,10 @@ public class Client extends BaseEntity {
 	public void setTelephone2(String telephone2) {
 		this.telephone2 = telephone2;
 	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 
 }

@@ -17,6 +17,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin(origins = "*")
 public class QuestionnaireController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EquipeController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuestionnaireController.class);
 
     @Autowired
     QuestionnaireRepository questionnaireRepository;
@@ -61,6 +62,7 @@ public class QuestionnaireController {
     }
 
     @PostMapping(path = "/create", consumes = { "application/json", "multipart/form-data" })
+    @Async
     public QuestionnaireDto saveQuestionnaire(@RequestParam("fichier") MultipartFile file,
             @RequestParam("libelle") String libelle, 
             @RequestParam("description") String description) {

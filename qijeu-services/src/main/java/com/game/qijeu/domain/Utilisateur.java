@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+import com.game.qijeu.dto.UtilisateurDto;
+
 @Entity
 public class Utilisateur extends BaseEntity {
 
@@ -28,15 +30,6 @@ public class Utilisateur extends BaseEntity {
 	@Column(nullable=false)
 	private String password;
 	
-	@Column(nullable=false, unique = true)
-	private String email1;
-
-	private String email2;
-
-	private String telephone1;
-
-	private String telephone2;
-	
 	@ManyToOne
 	private Parametre profil;
 
@@ -46,10 +39,9 @@ public class Utilisateur extends BaseEntity {
 	@ManyToOne
 	private Client client;
 	
-	public Utilisateur(String login, String password, String email, Parametre profil, Parametre statut) {
+	public Utilisateur(String login, String password, Parametre profil, Parametre statut) {
 		this.login = login;
 		this.password = password;
-		this.email1 = email;
 		this.profil = profil;
 		this.statut = statut;
 	}
@@ -57,19 +49,13 @@ public class Utilisateur extends BaseEntity {
 	public Utilisateur() {
 	}
 
-	public Utilisateur(String login, String password, Parametre statut) {
-		this.login = login;
-		this.password = password;
-		this.statut = statut;
-	}	
-	public Utilisateur(String login, String password, String email1, String email2, String telephone1, String telephone2) {
-		this.login = login;
-		this.password = password;
-		this.email1 = email1;
-		this.email2 = email2;
-		this.telephone1 = telephone1;
-		this.telephone2 = telephone2;
-	}		
+	
+	public Utilisateur(UtilisateurDto utilisateurDto) {
+		this.id = utilisateurDto.getId();
+		this.login = utilisateurDto.getLogin();
+		this.password = utilisateurDto.getPassword();
+	}
+	
 	public String getLogin() {
 		return login;
 	}
@@ -101,36 +87,17 @@ public class Utilisateur extends BaseEntity {
 		return id;
 	}
 
-	public String getEmail1() {
-		return email1;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setEmail1(String email1) {
-		this.email1 = email1;
+	public Client getClient() {
+		return client;
 	}
 
-	public String getEmail2() {
-		return email2;
-	}
-
-	public void setEmail2(String email2) {
-		this.email2 = email2;
-	}
-
-	public String getTelephone1() {
-		return telephone1;
-	}
-
-	public void setTelephone1(String telephone1) {
-		this.telephone1 = telephone1;
-	}
-
-	public String getTelephone2() {
-		return telephone2;
-	}
-
-	public void setTelephone2(String telephone2) {
-		this.telephone2 = telephone2;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 
