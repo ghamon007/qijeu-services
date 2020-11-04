@@ -12,7 +12,7 @@ public class QuestionnaireDto {
 
     private Long id;
 
-    private String libelle;
+    private String nom;
 
     private String description;
 
@@ -32,12 +32,12 @@ public class QuestionnaireDto {
         this.id = id;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public String getNom() {
+        return nom;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public String getDescription() {
@@ -77,11 +77,11 @@ public class QuestionnaireDto {
 
     public QuestionnaireDto(Questionnaire questionnaire){
         this.setId(questionnaire.getId());
-        this.setLibelle(questionnaire.getLibelle());
+        this.setNom(questionnaire.getNom());
         this.setDescription(questionnaire.getDescription());
         this.setDateCreation(questionnaire.getDateCreation());
         this.setDateModification(questionnaire.getDateModification());
-        this.setNomFichier(questionnaire.getLibelle()+".zip");
+        this.setNomFichier(questionnaire.getNom()+".zip");
 //        this.setFichier(questionnaire.getFichier());
         
     }

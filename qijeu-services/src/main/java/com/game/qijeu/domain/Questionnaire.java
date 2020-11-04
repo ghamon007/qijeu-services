@@ -28,7 +28,7 @@ public class Questionnaire extends BaseEntity {
 	private Long id;
 
 	@Column(nullable = false)
-	private String libelle;
+	private String nom;
 
 	private String description;
 
@@ -39,12 +39,12 @@ public class Questionnaire extends BaseEntity {
 	@ManyToMany
 	private List<Question> questions;
 
-	public String getLibelle() {
-		return libelle;
+	public String getNom() {
+		return nom;
 	}
 
-	public void setLibelle(String titre) {
-		this.libelle = titre;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 	public String getDescription() {
@@ -81,7 +81,7 @@ public class Questionnaire extends BaseEntity {
 
 	public Questionnaire(QuestionnaireDto questionnaireDto) {
 		this.id = questionnaireDto.getId();
-		this.libelle = questionnaireDto.getLibelle();
+		this.nom = questionnaireDto.getNom();
 		this.description = questionnaireDto.getDescription();
 /**		try {
 			this.fichier = questionnaireDto.getFichier().getBytes();

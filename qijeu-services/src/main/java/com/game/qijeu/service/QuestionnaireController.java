@@ -64,7 +64,7 @@ public class QuestionnaireController {
     @PostMapping(path = "/create", consumes = { "application/json", "multipart/form-data" })
     @Async
     public QuestionnaireDto saveQuestionnaire(@RequestParam("fichier") MultipartFile file,
-            @RequestParam("libelle") String libelle, 
+            @RequestParam("nom") String nom, 
             @RequestParam("description") String description) {
         // public QuestionnaireDto saveQuestionnaire(@RequestParam QuestionnaireDto
         // questionnaireDto) {
@@ -74,11 +74,11 @@ public class QuestionnaireController {
          * questionnaireRepository.save(questionnaire);
          **/
         LOGGER.info("Fichier" + file.getOriginalFilename());
-        LOGGER.info("Libelle " + libelle);
+        LOGGER.info("Libelle " + nom);
         LOGGER.info("Description " + description);
         
         Questionnaire questionnaire = new Questionnaire();
-        questionnaire.setLibelle(libelle);
+        questionnaire.setNom(nom);
         questionnaire.setDescription(description);
         try {
             questionnaire.setFichier(file.getBytes());
@@ -98,7 +98,7 @@ public class QuestionnaireController {
 
 		Resource file = new ByteArrayResource(aQuestionnaire.getFichier());
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-				"attachment; filename=\"" + aQuestionnaire.getLibelle()+".zip" + "\"").body(file);
+				"attachment; filename=\"" + aQuestionnaire.getNom()+".zip" + "\"").body(file);
 	}
 
     @DeleteMapping("/{id}")
@@ -110,7 +110,7 @@ public class QuestionnaireController {
     public QuestionnaireDto replace(@RequestBody QuestionnaireDto newQuestionnaire, @PathVariable Long id) {
         Questionnaire aQuestionnaire = questionnaireRepository.findById(id)
                 .orElseThrow(() -> new QuestionnaireNotFoundException(id));
-        aQuestionnaire.setLibelle(newQuestionnaire.getLibelle());
+        aQuestionnaire.setNom(newQuestionnaire.getNom());
         aQuestionnaire.setDescription(newQuestionnaire.getDescription());
 /**        try {
             aQuestionnaire.set(newQuestionnaire.getFichier().getBytes());

@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.game.qijeu.dto.QiJeuDto;
+
 @Entity
 public class QiJeu extends BaseEntity {
 	
@@ -25,12 +27,16 @@ public class QiJeu extends BaseEntity {
 	@SequenceGenerator(name="qijeu_generator", sequenceName = "seq_id_qijeu", allocationSize=50)	
 	private Long id;
 	
+	private String nom;
 	
-	@ManyToOne
-	private Competition saison;
 	
 	private Date dateQiJeu;
 	
+	@ManyToOne
+	private Competition competition;
+
+	@ManyToOne
+	private Questionnaire questionnaire;
 
 	@OneToMany
 	private List<QiJeuResultat> resultats;
@@ -51,12 +57,45 @@ public class QiJeu extends BaseEntity {
 		this.resultats = resultats;
 	}
 
-	public Competition getSaison() {
-		return saison;
+	public Competition getCompetition() {
+		return competition;
 	}
 
-	public void setSaison(Competition saison) {
-		this.saison = saison;
+	public void setCompetition(Competition aCompetition) {
+		this.competition = aCompetition;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public Questionnaire getQuestionnaire() {
+		return questionnaire;
+	}
+
+	public void setQuestionnaire(Questionnaire questionnaire) {
+		this.questionnaire = questionnaire;
+	}
+
+	public QiJeu() {
+	}
+
+	public QiJeu(QiJeuDto qiJeuDto){
+		this.nom = qiJeuDto.getNom();
+		this.dateQiJeu = qiJeuDto.getDateQiJeu();
+		this.id= qiJeuDto.getId();
 	}
 
 }
