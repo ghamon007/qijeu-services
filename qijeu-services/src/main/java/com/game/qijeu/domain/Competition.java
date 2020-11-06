@@ -111,4 +111,10 @@ public class Competition extends BaseEntity {
 		this.dateFin = competitionDto.getDateFin();
 	}
 	
+	public Competition(String nom, Date dateDebut, Date dateFin,Client client){
+		this.nom = nom;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.client = client;
+	}
 }

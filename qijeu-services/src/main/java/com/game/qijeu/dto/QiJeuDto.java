@@ -80,6 +80,7 @@ public class QiJeuDto implements Serializable {
         this.id  =qiJeu.getId();
         this.nom = qiJeu.getNom();
         this.dateQiJeu = qiJeu.getDateQiJeu();
+        this.dateCreation = qiJeu.getDateCreation();
         this.idCompetition = (qiJeu.getCompetition()!=null?qiJeu.getCompetition().getId():null);
         this.idQuestionnaire = (qiJeu.getQuestionnaire()!=null?qiJeu.getQuestionnaire().getId():null);
     }

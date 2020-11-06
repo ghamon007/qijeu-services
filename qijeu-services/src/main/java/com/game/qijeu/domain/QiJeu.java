@@ -98,4 +98,10 @@ public class QiJeu extends BaseEntity {
 		this.id= qiJeuDto.getId();
 	}
 
+	public QiJeu(String nom, Date dateQiJeu, Competition competition){
+		this.nom = nom;
+		this.dateQiJeu = dateQiJeu;
+		this.competition = competition;
+	}
+
 }

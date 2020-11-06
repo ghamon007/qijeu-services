@@ -111,6 +111,13 @@ public class Equipe extends BaseEntity {
 	public Equipe() {
 	}
 
+	public Equipe(String nom, String email1, Client client) {
+		this.nom = nom;
+		this.email1 = email1;
+		this.client = client;
+	}
+
+
 	public Equipe(EquipeDto equipeDto) {
 		this.id = equipeDto.getId();
 		this.nom = equipeDto.getNom();
