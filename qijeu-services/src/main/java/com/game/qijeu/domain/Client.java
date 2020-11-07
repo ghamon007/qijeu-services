@@ -53,6 +53,9 @@ public class Client extends BaseEntity {
 	@OneToMany
 	private List<Equipe> equipes;
 
+	@OneToMany
+	private List<Competition> competitions;
+
 	public Client() {
 	}
 
@@ -170,5 +173,23 @@ public class Client extends BaseEntity {
 		this.id = id;
 	}
 
+	public void addCompetition(Competition competition){
+		if (competitions == null){
+			competitions = new ArrayList<>();
+		}
+		competitions.add(competition);
+	}
+
+	public void deleteCompetition(Competition competition){
+		competitions.remove(competition);
+	}
+
+	public List<Competition> getCompetitions() {
+		return competitions;
+	}
+
+	public void setCompetitions(List<Competition> competitions) {
+		this.competitions = competitions;
+	}
 
 }

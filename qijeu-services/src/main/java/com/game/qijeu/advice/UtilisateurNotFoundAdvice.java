@@ -1,17 +1,19 @@
-package advice;
+package com.game.qijeu.advice;
 
 import com.game.qijeu.exception.ClientNotFoundException;
+import com.game.qijeu.exception.UtilisateurNotFoundException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class ClientNotFoundAdvice {
+public class UtilisateurNotFoundAdvice {
+
     @ResponseBody
     @ExceptionHandler(ClientNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String clientNotFoundHandler(ClientNotFoundException ex) {
+    String utilisateurNotFoundHandler(UtilisateurNotFoundException ex) {
       return ex.getMessage();
     }
 }

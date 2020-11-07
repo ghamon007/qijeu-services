@@ -60,6 +60,7 @@ public class CompetitionController {
 		Client client = clientRepository.findById(competitionDto.getIdClient()).orElseThrow(() -> new ClientNotFoundException(competitionDto.getId()));
 		Competition competition = new Competition(competitionDto);
 		competition.setClient(client);
+		client.addCompetition(competition);
 		competition = competitionRepository.save(competition);
 		return new CompetitionDto(competition);
 	}
@@ -75,6 +76,7 @@ public class CompetitionController {
 		aCompetition.setNom(newCompetition.getNom());
 		Client client = clientRepository.findById(newCompetition.getIdClient()).orElseThrow(() -> new ClientNotFoundException(newCompetition.getId()));
 		aCompetition.setClient(client);
+		client.addCompetition(aCompetition);
 		competitionRepository.save(aCompetition);
 		return new CompetitionDto(aCompetition);
 	}

@@ -22,6 +22,8 @@ public class CompetitionDto implements Serializable {
 
     private Long idClient;
 
+    private String nomClient;
+
     private Date dateCreation;
 
     private Date dateModification;
@@ -57,6 +59,7 @@ public class CompetitionDto implements Serializable {
         this.id = aCompetition.getId();
         this.nom = aCompetition.getNom();
         this.idClient = (aCompetition.getClient() !=null?aCompetition.getClient().getId():null);
+        this.nomClient = (aCompetition.getClient() !=null?aCompetition.getClient().getNom():null);
         this.dateCreation = aCompetition.getDateCreation();
         this.dateModification = aCompetition.getDateModification();
         this.dateDebut = aCompetition.getDateDebut();
@@ -95,12 +98,21 @@ public class CompetitionDto implements Serializable {
         this.dateFin = dateFin;
     }
 
+    public String getNomClient() {
+        return nomClient;
+    }
+
+    public void setNomClient(String nomClient) {
+        this.nomClient = nomClient;
+    }
+
     @Override
     public String toString() {
         return "CompetitionDto [dateCreation=" + dateCreation + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin
                 + ", dateModification=" + dateModification + ", id=" + id + ", idClient=" + idClient + ", nom=" + nom
                 + "]";
     }
+
 
 
     

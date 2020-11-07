@@ -81,7 +81,7 @@ public class QiJeuResultatController {
 	@PutMapping("/{id}")
 	public QiJeuResultatDto replace(@RequestBody QiJeuResultatDto newQiJeuResultat, @PathVariable Long id) {
 		QiJeuResultat aQiJeuResultat = qiJeuResultatRepository.findById(id).orElseThrow(() -> new QiJeuResultatNotFoundException(id));
-		aQiJeuResultat.setPoints(newQiJeuResultat.getResultat());;
+		aQiJeuResultat.setPoints(newQiJeuResultat.getPoints());;
         QiJeu qiJeu = qiJeuRepository.findById(newQiJeuResultat.getIdQiJeu()).orElseThrow(() -> new QiJeuNotFoundException(newQiJeuResultat.getIdQiJeu()));
         aQiJeuResultat.setQijeu(qiJeu);
 

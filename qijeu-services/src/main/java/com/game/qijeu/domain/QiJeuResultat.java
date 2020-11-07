@@ -70,7 +70,7 @@ public class QiJeuResultat extends BaseEntity {
 
 	public QiJeuResultat(QiJeuResultatDto qiJeuResultatDto) {
 		this.id = qiJeuResultatDto.getId();
-		this.points = qiJeuResultatDto.getResultat();
+		this.points = qiJeuResultatDto.getPoints();
 	}
 
 	public QiJeuResultat(QiJeu qiJeu, Equipe equipe, Integer points) {

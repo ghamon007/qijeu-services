@@ -27,6 +27,8 @@ public class EquipeDto implements Serializable {
 
     private Long idClient;
 
+    private String nomClient;
+
     private Date dateCreation;
 
     private Date dateModification;
@@ -98,6 +100,7 @@ public class EquipeDto implements Serializable {
         this.telephone1 = aEquipe.getTelephone1();
         this.telephone2 = aEquipe.getTelephone2();
         this.idClient = (aEquipe.getClient() !=null?aEquipe.getClient().getId():null);
+        this.nomClient = (aEquipe.getClient() !=null?aEquipe.getClient().getNom():null);
         this.dateCreation = aEquipe.getDateCreation();
         this.dateModification = aEquipe.getDateModification();
     }
@@ -118,11 +121,20 @@ public class EquipeDto implements Serializable {
         this.dateModification = dateModification;
     }
 
+    public String getNomClient() {
+        return nomClient;
+    }
+
+    public void setNomClient(String nomClient) {
+        this.nomClient = nomClient;
+    }
+
     @Override
     public String toString() {
         return "EquipeDto [dateCreation=" + dateCreation + ", dateModification=" + dateModification + ", email1="
                 + email1 + ", email2=" + email2 + ", id=" + id + ", idClient=" + idClient + ", nom=" + nom
                 + ", telephone1=" + telephone1 + ", telephone2=" + telephone2 + "]";
     }
+
     
 }

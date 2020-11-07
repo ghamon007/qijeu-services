@@ -20,13 +20,19 @@ public class UtilisateurDto implements Serializable{
 	
     private String codeStatut;
 
+    private String libelleStatut;
+
     private String codeProfil;
+
+    private String libelleProfil;
 
     private Date dateCreation;
 
     private Date dateModification;
 
     private Long idClient;
+
+    private String nomClient;
 
     public Long getId() {
         return id;
@@ -73,8 +79,12 @@ public class UtilisateurDto implements Serializable{
         this.login = utilisateur.getLogin();
         this.password = utilisateur.getPassword();
         this.codeProfil = (utilisateur.getProfil()!=null?utilisateur.getProfil().getCode():null);
+        this.libelleProfil = (utilisateur.getProfil()!=null?utilisateur.getProfil().getLibelle():null);
         this.codeStatut = (utilisateur.getStatut()!=null?utilisateur.getStatut().getCode():null);
+        this.libelleStatut = (utilisateur.getStatut()!=null?utilisateur.getStatut().getLibelle():null);
         this.idClient = (utilisateur.getClient()!=null?utilisateur.getClient().getId():null);
+        this.nomClient = (utilisateur.getClient()!=null?utilisateur.getClient().getNom():null);
+
         this.dateCreation = utilisateur.getDateCreation();
         this.dateModification = utilisateur.getDateModification();
     }

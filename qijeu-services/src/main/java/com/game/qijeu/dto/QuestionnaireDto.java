@@ -6,8 +6,6 @@ import java.util.List;
 
 import com.game.qijeu.domain.Questionnaire;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class QuestionnaireDto {
 
     private Long id;
@@ -79,11 +77,9 @@ public class QuestionnaireDto {
         this.setId(questionnaire.getId());
         this.setNom(questionnaire.getNom());
         this.setDescription(questionnaire.getDescription());
+        this.setNomFichier(questionnaire.getNom()+".zip");
         this.setDateCreation(questionnaire.getDateCreation());
         this.setDateModification(questionnaire.getDateModification());
-        this.setNomFichier(questionnaire.getNom()+".zip");
-//        this.setFichier(questionnaire.getFichier());
-        
     }
 
     public String getNomFichier() {
@@ -93,6 +89,7 @@ public class QuestionnaireDto {
     public void setNomFichier(String nomFichier) {
         this.nomFichier = nomFichier;
     }
+
 
    
 }

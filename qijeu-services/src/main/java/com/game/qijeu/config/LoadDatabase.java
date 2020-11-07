@@ -1,7 +1,6 @@
 package com.game.qijeu.config;
 
 import java.util.Calendar;
-import java.util.Optional;
 
 import com.game.qijeu.domain.Client;
 import com.game.qijeu.domain.Competition;
@@ -37,6 +36,18 @@ class LoadDatabase {
   @Value("${spring.servlet.multipart.max-file-size}")
   private String maxFileSize;
 
+  @Value("${qijeu.mode.test}")
+  private boolean modeTest;
+
+  @Value("${qijeu.nb.clients}")
+  private int nbClients;
+
+  @Value("${qijeu.nb.equipes}")
+  private int nbEquipes;
+
+  @Value("${qijeu.nb.jeux}")
+  private int nbJeux;
+
   @Bean(name = MultipartFilter.DEFAULT_MULTIPART_RESOLVER_BEAN_NAME)
   protected MultipartResolver getMultipartResolver() {
     CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
@@ -49,45 +60,67 @@ class LoadDatabase {
 
   @Bean
   CommandLineRunner initDatabase(ParametreRepository repository, UtilisateurRepository userRepository,
-      ClientRepository clientRepository, CompetitionRepository competitionRepository, EquipeRepository equipeRepository, QiJeuRepository qiJeuRepository, QiJeuResultatRepository qiJeuResultatRepository){
+      ClientRepository clientRepository, CompetitionRepository competitionRepository, EquipeRepository equipeRepository,
+      QiJeuRepository qiJeuRepository, QiJeuResultatRepository qiJeuResultatRepository) {
 
     return args -> {
-      log.info("Preloading " + repository.save(new Parametre("PROFIL_ADMIN", "Administrateur", "PROFIL")));
-      log.info("Preloading " + repository.save(new Parametre("PROFIL_MANAGER", "Gestionnaire", "PROFIL")));
-      log.info("Preloading " + repository.save(new Parametre("STATUT_ACTIF", "Actif", "STATUT")));
+
+      Parametre profilAdmin = new Parametre("PROFIL_ADMIN", "Administrateur", "PROFIL");
+      log.info("Preloading " + repository.save(profilAdmin));
+      Parametre profilGestion = new Parametre("PROFIL_MANAGER", "Gestionnaire", "PROFIL");
+      log.info("Preloading " + repository.save(profilGestion));
+      Parametre statutActif = new Parametre("STATUT_ACTIF", "Actif", "STATUT");
+      log.info("Preloading " + repository.save(statutActif));
       log.info("Preloading " + repository.save(new Parametre("STATUT_BLOQUE", "Bloqué", "STATUT")));
       log.info("Preloading " + repository.save(new Parametre("STATUT_INIT", "Initialisé", "STATUT")));
-      Optional<Parametre> statut =  repository.findByCode("STATUT_ACTIF");
-      Optional<Parametre> profil =  repository.findByCode("PROFIL_ADMIN");
-      log.info("Preloading " + userRepository.save(new Utilisateur("admin", "admin", statut.get(), profil.get())));
-      Client client = new Client("Bar de test", "Bd Alsace Lorraine", "31000", "Toulouse", "France");
-      log.info("Preloading "+ clientRepository.save(client));
-      Calendar dateDebut = Calendar.getInstance();
-      Calendar dateFin  = Calendar.getInstance();
-      Competition competition =  new Competition("Saison 2020-2021", dateDebut.getTime(), dateFin.getTime(), client);
-      dateFin.add(Calendar.YEAR, 1);
-      log.info("Preloading "+ competitionRepository.save(competition));
-      Equipe[] equipes = new Equipe[10];
-      for (int i = 0; i < 10; i++) {
-        equipes[i] = new Equipe("Equipe "+i,"equipe"+i+"@gmail.com", client);
-        log.info("Preloading "+ equipeRepository.save(equipes[i]));  
-      }
+      log.info("Preloading " + userRepository.save(new Utilisateur("admin", "admin", statutActif, profilAdmin)));
 
-      QiJeu[] qiJeux = new QiJeu[10];
-      for (int i = 0; i < 10; i++) {
-        Calendar dateQiJeu = Calendar.getInstance();
-        dateQiJeu.add(Calendar.MONTH, i);
-        qiJeux[i] = new QiJeu("Journee "+i,dateQiJeu.getTime(), competition);
-        log.info("Preloading "+ qiJeuRepository.save(qiJeux[i]));
-      }
+      if (modeTest) {
+        Client[] clients = new Client[nbClients];
+        String adresse;
+        String codePostal;
+        String commune;
+        for (int i = 0; i < clients.length; i++) {
+          if (i % 2 == 0) {
+            adresse = "Bd Alsace Lorraine";
+            codePostal = "31000";
+            commune = "Toulouse";
+          } else {
+            adresse = "Bd Victor HUgo";
+            codePostal = "33000";
+            commune = "Bordeaux";
+          }
+          clients[i] = new Client("Bar de test " + i, adresse, codePostal, commune, "France");
+          log.info("Preloading " + clientRepository.save(clients[i]));
+          // Creation de la saison 2020-2021 pour chaque client
+          Calendar dateDebut = Calendar.getInstance();
+          Calendar dateFin = Calendar.getInstance();
+          dateFin.add(Calendar.YEAR, 1);
+          Competition competition = new Competition("Saison 2020-2021", dateDebut.getTime(), dateFin.getTime(),
+              clients[i]);
+          clients[i].addCompetition(competition);
+          log.info("Preloading " + competitionRepository.save(competition));
+          // Creation des equipes de test par client
+          Equipe[] equipes = new Equipe[nbEquipes];
+          for (int j = 0; j < equipes.length; j++) {
+            equipes[j] = new Equipe("Equipe " + j, "equipe" + j + "@gmail.com", clients[i]);
+            log.info("Preloading " + equipeRepository.save(equipes[j]));
+          }
+          // Creation des qiJux de test par client
+          QiJeu[] qiJeux = new QiJeu[nbJeux];
+          for (int k = 0; k < qiJeux.length; k++) {
+            Calendar dateQiJeu = Calendar.getInstance();
+            dateQiJeu.add(Calendar.MONTH, k);
+            qiJeux[k] = new QiJeu("Journee " + k, dateQiJeu.getTime(), clients[i].getCompetitions().get(0));
+            log.info("Preloading " + qiJeuRepository.save(qiJeux[k]));
+            for (Equipe equipe : equipes) {
+              Integer points = (int) Math.round(Math.random() * 100);
+              QiJeuResultat qiJeuResultat = new QiJeuResultat(qiJeux[k], equipe, points);
+              log.info("Preloading " + qiJeuResultatRepository.save(qiJeuResultat));
+            }
 
-      for (QiJeu qiJeu : qiJeux) {
-        for (Equipe equipe : equipes) {
-          Integer points = (int) Math.round(Math.random()*100);
-          QiJeuResultat qiJeuResultat = new QiJeuResultat(qiJeu, equipe,points);
-          log.info("Preloading "+ qiJeuResultatRepository.save(qiJeuResultat));
+          }
         }
-        
       }
 
     };

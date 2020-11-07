@@ -32,7 +32,7 @@ public class ClientDto implements Serializable {
 
     private String telephone2;
     
-    private List<Long> qiJeux;
+    private List<QiJeuDto> qiJeuDtos;
 
     public String getNom() {
         return nom;
@@ -114,13 +114,6 @@ public class ClientDto implements Serializable {
         this.id = id;
     }
 
-    public List<Long> getQiJeux() {
-        return qiJeux;
-    }
-
-    public void setQiJeux(List<Long> qiJeux) {
-        this.qiJeux = qiJeux;
-    }
   
     public ClientDto() {
     }
@@ -136,7 +129,6 @@ public class ClientDto implements Serializable {
         this.setEmail2(client.getEmail2());
         this.setTelephone1(client.getTelephone1());
         this.setTelephone2(client.getTelephone2());
-
     }
 
    
