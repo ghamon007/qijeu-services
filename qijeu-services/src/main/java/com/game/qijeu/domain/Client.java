@@ -13,9 +13,9 @@ import javax.persistence.SequenceGenerator;
 
 import com.game.qijeu.dto.ClientDto;
 
-@Entity
+@Entity 
 public class Client extends BaseEntity {
-
+ 
 	/**
 	 * 
 	 */

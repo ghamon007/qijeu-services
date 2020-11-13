@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.game.qijeu.domain.Utilisateur;
 
-public class UtilisateurDto implements Serializable{
+public class UtilisateurDto implements Serializable {
 
     /**
      *
@@ -13,11 +13,11 @@ public class UtilisateurDto implements Serializable{
     private static final long serialVersionUID = 5902065575591131273L;
 
     private Long id;
-	
-	private String login;
-	
-	private String password;
-	
+
+    private String login;
+
+    private String password;
+
     private String codeStatut;
 
     private String libelleStatut;
@@ -78,12 +78,12 @@ public class UtilisateurDto implements Serializable{
         this.id = utilisateur.getId();
         this.login = utilisateur.getLogin();
         this.password = utilisateur.getPassword();
-        this.codeProfil = (utilisateur.getProfil()!=null?utilisateur.getProfil().getCode():null);
-        this.libelleProfil = (utilisateur.getProfil()!=null?utilisateur.getProfil().getLibelle():null);
-        this.codeStatut = (utilisateur.getStatut()!=null?utilisateur.getStatut().getCode():null);
-        this.libelleStatut = (utilisateur.getStatut()!=null?utilisateur.getStatut().getLibelle():null);
-        this.idClient = (utilisateur.getClient()!=null?utilisateur.getClient().getId():null);
-        this.nomClient = (utilisateur.getClient()!=null?utilisateur.getClient().getNom():null);
+        this.codeProfil = (utilisateur.getProfil() != null ? utilisateur.getProfil().getCode() : null);
+        this.libelleProfil = (utilisateur.getProfil() != null ? utilisateur.getProfil().getLibelle() : null);
+        this.codeStatut = (utilisateur.getStatut() != null ? utilisateur.getStatut().getCode() : null);
+        this.libelleStatut = (utilisateur.getStatut() != null ? utilisateur.getStatut().getLibelle() : null);
+        this.idClient = (utilisateur.getClient() != null ? utilisateur.getClient().getId() : null);
+        this.nomClient = (utilisateur.getClient() != null ? utilisateur.getClient().getNom() : null);
 
         this.dateCreation = utilisateur.getDateCreation();
         this.dateModification = utilisateur.getDateModification();
@@ -104,11 +104,9 @@ public class UtilisateurDto implements Serializable{
         return dateModification;
     }
 
-
     public void setDateModification(Date dateModification) {
         this.dateModification = dateModification;
     }
-
 
     public Long getIdClient() {
         return idClient;
@@ -118,5 +116,28 @@ public class UtilisateurDto implements Serializable{
         this.idClient = idClient;
     }
 
-    
+    public String getLibelleStatut() {
+        return libelleStatut;
+    }
+
+    public void setLibelleStatut(String libelleStatut) {
+        this.libelleStatut = libelleStatut;
+    }
+
+    public String getLibelleProfil() {
+        return libelleProfil;
+    }
+
+    public void setLibelleProfil(String libelleProfil) {
+        this.libelleProfil = libelleProfil;
+    }
+
+    public String getNomClient() {
+        return nomClient;
+    }
+
+    public void setNomClient(String nomClient) {
+        this.nomClient = nomClient;
+    }
+
 }
