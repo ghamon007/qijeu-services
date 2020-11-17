@@ -26,6 +26,8 @@ public class QiJeuResultat extends BaseEntity {
 	@SequenceGenerator(name = "qijeu_resultat_generator", sequenceName = "seq_id_qijeu_resultat", allocationSize = 50)
 	private Long id;
 
+	private Integer classement;
+
 	@ManyToOne
 	private QiJeu qijeu;
 
@@ -71,12 +73,21 @@ public class QiJeuResultat extends BaseEntity {
 	public QiJeuResultat(QiJeuResultatDto qiJeuResultatDto) {
 		this.id = qiJeuResultatDto.getId();
 		this.points = qiJeuResultatDto.getPoints();
+		this.classement = qiJeuResultatDto.getClassement();
 	}
 
 	public QiJeuResultat(QiJeu qiJeu, Equipe equipe, Integer points) {
 		this.equipe = equipe;
 		this.qijeu = qiJeu;
 		this.points = points;
+	}
+
+	public Integer getClassement() {
+		return classement;
+	}
+
+	public void setClassement(Integer classement) {
+		this.classement = classement;
 	}
 
 }

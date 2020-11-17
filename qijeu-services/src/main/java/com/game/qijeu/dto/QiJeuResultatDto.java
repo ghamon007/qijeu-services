@@ -32,6 +32,8 @@ public class QiJeuResultatDto implements Serializable {
 
     private int points;
 
+    private int classement;
+
     private Date dateCreation;
 
     private Date dateModification;
@@ -52,7 +54,7 @@ public class QiJeuResultatDto implements Serializable {
         this.idEquipe = idEquipe;
     }
 
-     public Date getDateCreation() {
+    public Date getDateCreation() {
         return dateCreation;
     }
 
@@ -72,12 +74,22 @@ public class QiJeuResultatDto implements Serializable {
         this.id = qiJeuResultat.getId();
         this.idEquipe = qiJeuResultat.getEquipe().getId();
         this.nomEquipe = qiJeuResultat.getEquipe().getNom();
-        this.idQiJeu = (qiJeuResultat.getQijeu()!=null?qiJeuResultat.getQijeu().getId():null);
-        this.nomQiJeu = (qiJeuResultat.getQijeu()!=null?qiJeuResultat.getQijeu().getNom():null);
-        this.idCompetition = (qiJeuResultat.getQijeu()!=null && qiJeuResultat.getQijeu().getCompetition() != null?qiJeuResultat.getQijeu().getCompetition().getId():null);
-        this.nomCompetition = (qiJeuResultat.getQijeu()!=null && qiJeuResultat.getQijeu().getCompetition() != null?qiJeuResultat.getQijeu().getCompetition().getNom():null);
-        this.idClient = (qiJeuResultat.getQijeu()!=null && qiJeuResultat.getQijeu().getCompetition() != null && qiJeuResultat.getQijeu().getCompetition().getClient()!= null?qiJeuResultat.getQijeu().getCompetition().getClient().getId():null);
-        this.nomClient = (qiJeuResultat.getQijeu()!=null && qiJeuResultat.getQijeu().getCompetition() != null&& qiJeuResultat.getQijeu().getCompetition().getClient()!= null?qiJeuResultat.getQijeu().getCompetition().getClient().getNom():null);
+        this.idQiJeu = (qiJeuResultat.getQijeu() != null ? qiJeuResultat.getQijeu().getId() : null);
+        this.nomQiJeu = (qiJeuResultat.getQijeu() != null ? qiJeuResultat.getQijeu().getNom() : null);
+        this.idCompetition = (qiJeuResultat.getQijeu() != null && qiJeuResultat.getQijeu().getCompetition() != null
+                ? qiJeuResultat.getQijeu().getCompetition().getId()
+                : null);
+        this.nomCompetition = (qiJeuResultat.getQijeu() != null && qiJeuResultat.getQijeu().getCompetition() != null
+                ? qiJeuResultat.getQijeu().getCompetition().getNom()
+                : null);
+        this.idClient = (qiJeuResultat.getQijeu() != null && qiJeuResultat.getQijeu().getCompetition() != null
+                && qiJeuResultat.getQijeu().getCompetition().getClient() != null
+                        ? qiJeuResultat.getQijeu().getCompetition().getClient().getId()
+                        : null);
+        this.nomClient = (qiJeuResultat.getQijeu() != null && qiJeuResultat.getQijeu().getCompetition() != null
+                && qiJeuResultat.getQijeu().getCompetition().getClient() != null
+                        ? qiJeuResultat.getQijeu().getCompetition().getClient().getNom()
+                        : null);
         this.points = qiJeuResultat.getPoints();
         this.dateCreation = qiJeuResultat.getDateCreation();
         this.dateModification = qiJeuResultat.getDateModification();
@@ -85,7 +97,6 @@ public class QiJeuResultatDto implements Serializable {
 
     public QiJeuResultatDto() {
     }
-
 
     public String getNomEquipe() {
         return nomEquipe;
@@ -151,6 +162,12 @@ public class QiJeuResultatDto implements Serializable {
         this.nomClient = nomClient;
     }
 
-   
-    
+    public int getClassement() {
+        return classement;
+    }
+
+    public void setClassement(int classement) {
+        this.classement = classement;
+    }
+
 }

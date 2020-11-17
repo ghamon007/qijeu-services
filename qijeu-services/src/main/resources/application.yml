@@ -1,0 +1,48 @@
+server:
+  port: 8090
+
+# DataSource settings: set here configurations for the database connection
+#spring.jpa.hibernate.ddl-auto
+spring:
+  datasource:
+    platform: "postgres"
+    url: "jdbc:postgresql://localhost:5432/qijeu_db"
+    username: "qijeu_user"
+    password: "qijeu_pwd"
+  jpa:
+    hibernate:
+      ddl-auto: "create-drop"
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.PostgreSQLDialect"
+      jdbc:
+        lob:
+          non_contextual_creation: true
+    current_session_context_class: "thread"
+    format_sql: true
+  open-in-view: false
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: "200MB"
+      max-request-size: "200MB"
+#security:
+#  oauth2:
+#    client:
+#      registration:
+#        github:
+#          clientId: github-client-id
+#          clientSecret: github-client-secret
+
+#######################################
+#  Variables QIJEU
+#######################################
+#Activation du mode test et parametrage
+qijeu:
+  mode:
+    test: true
+  nb:
+    clients: 10
+    equipes: 10
+    competitions: 10
+    jeux: 10

@@ -10,7 +10,6 @@ import com.game.qijeu.exception.ClientNotFoundException;
 import com.game.qijeu.exception.CompetitionNotFoundException;
 import com.game.qijeu.jpa.repository.ClientRepository;
 import com.game.qijeu.jpa.repository.CompetitionRepository;
-import com.game.qijeu.jpa.repository.EquipeRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +31,9 @@ public class CompetitionController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CompetitionController.class);
 
-    @Autowired
+	@Autowired
 	CompetitionRepository competitionRepository;
-	
+
 	@Autowired
 	ClientRepository clientRepository;
 
@@ -42,7 +41,7 @@ public class CompetitionController {
 	public List<CompetitionDto> all() {
 		List<CompetitionDto> result = new ArrayList<>();
 		for (Competition competition : competitionRepository.findAll()) {
-			CompetitionDto competitionDto =new CompetitionDto(competition);
+			CompetitionDto competitionDto = new CompetitionDto(competition);
 			result.add(competitionDto);
 		}
 		return result;
@@ -50,14 +49,16 @@ public class CompetitionController {
 
 	@GetMapping(path = "/{id}", produces = "application/json")
 	public CompetitionDto one(@PathVariable Long id) {
-		Competition competition = competitionRepository.findById(id).orElseThrow(() -> new CompetitionNotFoundException(id)); 
+		Competition competition = competitionRepository.findById(id)
+				.orElseThrow(() -> new CompetitionNotFoundException(id));
 		return new CompetitionDto(competition);
 	}
 
 	@PostMapping("/create")
-	public CompetitionDto saveCompetition(@RequestBody CompetitionDto competitionDto){
+	public CompetitionDto saveCompetition(@RequestBody CompetitionDto competitionDto) {
 		LOGGER.info(competitionDto.toString());
-		Client client = clientRepository.findById(competitionDto.getIdClient()).orElseThrow(() -> new ClientNotFoundException(competitionDto.getId()));
+		Client client = clientRepository.findById(competitionDto.getIdClient())
+				.orElseThrow(() -> new ClientNotFoundException(competitionDto.getId()));
 		Competition competition = new Competition(competitionDto);
 		competition.setClient(client);
 		client.addCompetition(competition);
@@ -72,9 +73,11 @@ public class CompetitionController {
 
 	@PutMapping("/{id}")
 	public CompetitionDto replace(@RequestBody CompetitionDto newCompetition, @PathVariable Long id) {
-		Competition aCompetition = competitionRepository.findById(id).orElseThrow(() -> new CompetitionNotFoundException(id));
+		Competition aCompetition = competitionRepository.findById(id)
+				.orElseThrow(() -> new CompetitionNotFoundException(id));
 		aCompetition.setNom(newCompetition.getNom());
-		Client client = clientRepository.findById(newCompetition.getIdClient()).orElseThrow(() -> new ClientNotFoundException(newCompetition.getId()));
+		Client client = clientRepository.findById(newCompetition.getIdClient())
+				.orElseThrow(() -> new ClientNotFoundException(newCompetition.getId()));
 		aCompetition.setClient(client);
 		client.addCompetition(aCompetition);
 		competitionRepository.save(aCompetition);

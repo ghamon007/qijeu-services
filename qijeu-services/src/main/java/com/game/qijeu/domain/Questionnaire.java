@@ -1,6 +1,5 @@
 package com.game.qijeu.domain;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -83,15 +82,13 @@ public class Questionnaire extends BaseEntity {
 		this.id = questionnaireDto.getId();
 		this.nom = questionnaireDto.getNom();
 		this.description = questionnaireDto.getDescription();
-/**		try {
-			this.fichier = questionnaireDto.getFichier().getBytes();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}**/
+		/**
+		 * try { this.fichier = questionnaireDto.getFichier().getBytes(); } catch
+		 * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); }
+		 **/
 	}
 
 	public Questionnaire() {
 	}
-	
+
 }

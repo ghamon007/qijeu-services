@@ -8,7 +8,6 @@ import com.game.qijeu.domain.Client;
 import com.game.qijeu.domain.Parametre;
 import com.game.qijeu.domain.Utilisateur;
 import com.game.qijeu.dto.UtilisateurDto;
-import com.game.qijeu.exception.UtilisateurNotFoundException;
 import com.game.qijeu.jpa.repository.ClientRepository;
 import com.game.qijeu.jpa.repository.ParametreRepository;
 import com.game.qijeu.jpa.repository.UtilisateurRepository;
@@ -28,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class UtilisateurController {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(UtilisateurController.class);
@@ -42,12 +41,12 @@ public class UtilisateurController {
 	@Autowired
 	ClientRepository clientRepository;
 
-	@PostMapping("/login")
-	public Utilisateur login(@RequestBody Utilisateur utilisateur) {
-		LOGGER.info("Login de l'utilisateur : " + utilisateur.getLogin());
-		return utilisateurRepository.findByLoginAndPassword(utilisateur.getLogin(), utilisateur.getPassword())
-				.orElseThrow(() -> new UtilisateurNotFoundException(utilisateur.getLogin(), utilisateur.getPassword()));
-	}
+	/**
+	 * @PostMapping("/login") public Map<String, Object>
+	 * login(@AuthenticationPrincipal OAuth2User principal) { LOGGER.info("Login de
+	 * l'utilisateur : " + principal.getAttribute("name")); return
+	 * Collections.singletonMap("name", principal.getAttribute("name")); }
+	 */
 
 	@GetMapping("/list")
 	public List<UtilisateurDto> all() {

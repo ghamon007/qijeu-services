@@ -32,23 +32,22 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("*")
 public class QiJeuResultatController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(QiJeuResultatController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(QiJeuResultatController.class);
 
-    @Autowired
+	@Autowired
 	QiJeuResultatRepository qiJeuResultatRepository;
 
-    @Autowired
-    QiJeuRepository qiJeuRepository;
+	@Autowired
+	QiJeuRepository qiJeuRepository;
 
-    @Autowired
-    EquipeRepository equipeRepository;
+	@Autowired
+	EquipeRepository equipeRepository;
 
-    
-    @GetMapping("/list")
+	@GetMapping("/list")
 	public List<QiJeuResultatDto> all() {
 		List<QiJeuResultatDto> result = new ArrayList<>();
 		for (QiJeuResultat qiJeuResultat : qiJeuResultatRepository.findAll()) {
-			QiJeuResultatDto qiJeuResultatDto =new QiJeuResultatDto(qiJeuResultat);
+			QiJeuResultatDto qiJeuResultatDto = new QiJeuResultatDto(qiJeuResultat);
 			result.add(qiJeuResultatDto);
 		}
 		return result;
@@ -56,19 +55,23 @@ public class QiJeuResultatController {
 
 	@GetMapping(path = "/{id}", produces = "application/json")
 	public QiJeuResultatDto one(@PathVariable Long id) {
-		QiJeuResultat qiJeuResultat = qiJeuResultatRepository.findById(id).orElseThrow(() -> new QiJeuResultatNotFoundException(id)); 
+		QiJeuResultat qiJeuResultat = qiJeuResultatRepository.findById(id)
+				.orElseThrow(() -> new QiJeuResultatNotFoundException(id));
 		return new QiJeuResultatDto(qiJeuResultat);
 	}
 
 	@PostMapping("/create")
-	public QiJeuResultatDto saveQiJeuResultat(@RequestBody QiJeuResultatDto qiJeuResultatDto){
+	public QiJeuResultatDto saveQiJeuResultat(@RequestBody QiJeuResultatDto qiJeuResultatDto) {
 		LOGGER.info(qiJeuResultatDto.toString());
-        QiJeuResultat qiJeuResultat = new QiJeuResultat(qiJeuResultatDto);
-        QiJeu qiJeu = qiJeuRepository.findById(qiJeuResultatDto.getIdQiJeu()).orElseThrow(() -> new QiJeuNotFoundException(qiJeuResultatDto.getIdQiJeu()));
-        qiJeuResultat.setQijeu(qiJeu);
+		QiJeuResultat qiJeuResultat = new QiJeuResultat(qiJeuResultatDto);
+		QiJeu qiJeu = qiJeuRepository.findById(qiJeuResultatDto.getIdQiJeu())
+				.orElseThrow(() -> new QiJeuNotFoundException(qiJeuResultatDto.getIdQiJeu()));
 
-        Equipe equipe = equipeRepository.findById(qiJeuResultatDto.getIdEquipe()).orElseThrow(() -> new EquipeNotFoundException(qiJeuResultatDto.getIdEquipe()));
-        qiJeuResultat.setEquipe(equipe);
+		qiJeuResultat.setQijeu(qiJeu);
+
+		Equipe equipe = equipeRepository.findById(qiJeuResultatDto.getIdEquipe())
+				.orElseThrow(() -> new EquipeNotFoundException(qiJeuResultatDto.getIdEquipe()));
+		qiJeuResultat.setEquipe(equipe);
 		qiJeuResultat = qiJeuResultatRepository.save(qiJeuResultat);
 		return new QiJeuResultatDto(qiJeuResultat);
 	}
@@ -76,19 +79,23 @@ public class QiJeuResultatController {
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		qiJeuRepository.deleteById(id);
+
 	}
 
 	@PutMapping("/{id}")
 	public QiJeuResultatDto replace(@RequestBody QiJeuResultatDto newQiJeuResultat, @PathVariable Long id) {
-		QiJeuResultat aQiJeuResultat = qiJeuResultatRepository.findById(id).orElseThrow(() -> new QiJeuResultatNotFoundException(id));
-		aQiJeuResultat.setPoints(newQiJeuResultat.getPoints());;
-        QiJeu qiJeu = qiJeuRepository.findById(newQiJeuResultat.getIdQiJeu()).orElseThrow(() -> new QiJeuNotFoundException(newQiJeuResultat.getIdQiJeu()));
-        aQiJeuResultat.setQijeu(qiJeu);
+		QiJeuResultat aQiJeuResultat = qiJeuResultatRepository.findById(id)
+				.orElseThrow(() -> new QiJeuResultatNotFoundException(id));
+		aQiJeuResultat.setPoints(newQiJeuResultat.getPoints());
+		;
+		QiJeu qiJeu = qiJeuRepository.findById(newQiJeuResultat.getIdQiJeu())
+				.orElseThrow(() -> new QiJeuNotFoundException(newQiJeuResultat.getIdQiJeu()));
+		aQiJeuResultat.setQijeu(qiJeu);
 
-        Equipe equipe = equipeRepository.findById(newQiJeuResultat.getIdEquipe()).orElseThrow(() -> new EquipeNotFoundException(newQiJeuResultat.getIdEquipe()));
-        aQiJeuResultat.setEquipe(equipe);
+		Equipe equipe = equipeRepository.findById(newQiJeuResultat.getIdEquipe())
+				.orElseThrow(() -> new EquipeNotFoundException(newQiJeuResultat.getIdEquipe()));
+		aQiJeuResultat.setEquipe(equipe);
 		return new QiJeuResultatDto(aQiJeuResultat);
 	}
 
-    
 }

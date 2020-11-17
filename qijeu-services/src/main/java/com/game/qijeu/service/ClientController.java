@@ -2,7 +2,6 @@ package com.game.qijeu.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.game.qijeu.domain.Client;
 import com.game.qijeu.dto.ClientDto;
@@ -27,7 +26,6 @@ public class ClientController {
 
 	@Autowired
 	ClientRepository clientRepository;
-
 
 	@GetMapping("/list")
 	public List<ClientDto> all() {
@@ -58,7 +56,7 @@ public class ClientController {
 
 	@PutMapping("/{id}")
 	public ClientDto replace(@RequestBody Client newClient, @PathVariable Long id) {
-		Client aClient =  clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
+		Client aClient = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
 		aClient.setNom(newClient.getNom());
 		aClient.setAdresse(newClient.getAdresse());
 		aClient.setCodePostal(newClient.getCodePostal());

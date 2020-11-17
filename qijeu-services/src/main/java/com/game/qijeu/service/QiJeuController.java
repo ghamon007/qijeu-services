@@ -34,7 +34,7 @@ public class QiJeuController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(QiJeuController.class);
 
-    @Autowired
+	@Autowired
 	QiJeuRepository qiJeuRepository;
 
 	@Autowired
@@ -42,13 +42,12 @@ public class QiJeuController {
 
 	@Autowired
 	CompetitionRepository competitionRepository;
-    
-    
-    @GetMapping("/list")
+
+	@GetMapping("/list")
 	public List<QiJeuDto> all() {
 		List<QiJeuDto> result = new ArrayList<>();
 		for (QiJeu qiJeu : qiJeuRepository.findAll()) {
-			QiJeuDto qiJeuDto =new QiJeuDto(qiJeu);
+			QiJeuDto qiJeuDto = new QiJeuDto(qiJeu);
 			result.add(qiJeuDto);
 		}
 		return result;
@@ -56,17 +55,19 @@ public class QiJeuController {
 
 	@GetMapping(path = "/{id}", produces = "application/json")
 	public QiJeuDto one(@PathVariable Long id) {
-		QiJeu qiJeu = qiJeuRepository.findById(id).orElseThrow(() -> new QiJeuNotFoundException(id)); 
+		QiJeu qiJeu = qiJeuRepository.findById(id).orElseThrow(() -> new QiJeuNotFoundException(id));
 		return new QiJeuDto(qiJeu);
 	}
 
 	@PostMapping("/create")
-	public QiJeuDto saveQiJeu(@RequestBody QiJeuDto qiJeuDto){
+	public QiJeuDto saveQiJeu(@RequestBody QiJeuDto qiJeuDto) {
 		LOGGER.info(qiJeuDto.toString());
 		QiJeu qiJeu = new QiJeu(qiJeuDto);
-		Questionnaire questionnaire = questionnaireRepository.findById(qiJeuDto.getIdQuestionnaire()).orElseThrow(() -> new QuestionnaireNotFoundException(qiJeuDto.getId()));
+		Questionnaire questionnaire = questionnaireRepository.findById(qiJeuDto.getIdQuestionnaire())
+				.orElseThrow(() -> new QuestionnaireNotFoundException(qiJeuDto.getId()));
 		qiJeu.setQuestionnaire(questionnaire);
-		Competition competition = competitionRepository.findById(qiJeuDto.getIdCompetition()).orElseThrow(() -> new CompetitionNotFoundException(qiJeuDto.getId()));
+		Competition competition = competitionRepository.findById(qiJeuDto.getIdCompetition())
+				.orElseThrow(() -> new CompetitionNotFoundException(qiJeuDto.getId()));
 		qiJeu.setCompetition(competition);
 		qiJeu = qiJeuRepository.save(qiJeu);
 		return new QiJeuDto(qiJeu);
@@ -82,9 +83,11 @@ public class QiJeuController {
 		QiJeu aQiJeu = qiJeuRepository.findById(id).orElseThrow(() -> new QiJeuNotFoundException(id));
 		aQiJeu.setNom(newQiJeu.getNom());
 		aQiJeu.setDateQiJeu(newQiJeu.getDateQiJeu());
-		Questionnaire questionnaire = questionnaireRepository.findById(newQiJeu.getIdQuestionnaire()).orElseThrow(() -> new QuestionnaireNotFoundException(id));
+		Questionnaire questionnaire = questionnaireRepository.findById(newQiJeu.getIdQuestionnaire())
+				.orElseThrow(() -> new QuestionnaireNotFoundException(id));
 		aQiJeu.setQuestionnaire(questionnaire);
-		Competition competition = competitionRepository.findById(newQiJeu.getIdCompetition()).orElseThrow(() -> new CompetitionNotFoundException(id));
+		Competition competition = competitionRepository.findById(newQiJeu.getIdCompetition())
+				.orElseThrow(() -> new CompetitionNotFoundException(id));
 		aQiJeu.setCompetition(competition);
 		return new QiJeuDto(aQiJeu);
 	}
