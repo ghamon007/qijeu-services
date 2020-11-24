@@ -14,7 +14,6 @@ import com.game.qijeu.jpa.repository.EquipeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,14 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/equipe")
-@CrossOrigin(origins = "*")
 public class EquipeController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EquipeController.class);
 
-    @Autowired
+	@Autowired
 	EquipeRepository equipeRepository;
-	
+
 	@Autowired
 	ClientRepository clientRepository;
 
@@ -41,7 +39,7 @@ public class EquipeController {
 	public List<EquipeDto> all() {
 		List<EquipeDto> result = new ArrayList<>();
 		for (Equipe equipe : equipeRepository.findAll()) {
-			EquipeDto equipeDto =new EquipeDto(equipe);
+			EquipeDto equipeDto = new EquipeDto(equipe);
 			result.add(equipeDto);
 		}
 		return result;
@@ -49,14 +47,15 @@ public class EquipeController {
 
 	@GetMapping(path = "/{id}", produces = "application/json")
 	public EquipeDto one(@PathVariable Long id) {
-		Equipe equipe = equipeRepository.findById(id).orElseThrow(() -> new EquipeNotFoundException(id)); 
+		Equipe equipe = equipeRepository.findById(id).orElseThrow(() -> new EquipeNotFoundException(id));
 		return new EquipeDto(equipe);
 	}
 
 	@PostMapping("/create")
-	public EquipeDto saveEquipe(@RequestBody EquipeDto equipeDto){
+	public EquipeDto saveEquipe(@RequestBody EquipeDto equipeDto) {
 		LOGGER.info(equipeDto.toString());
-		Client client = clientRepository.findById(equipeDto.getIdClient()).orElseThrow(() -> new ClientNotFoundException(equipeDto.getId()));
+		Client client = clientRepository.findById(equipeDto.getIdClient())
+				.orElseThrow(() -> new ClientNotFoundException(equipeDto.getId()));
 		Equipe equipe = new Equipe(equipeDto);
 		equipe.setClient(client);
 		equipe = equipeRepository.save(equipe);
@@ -76,7 +75,8 @@ public class EquipeController {
 		aEquipe.setEmail2(newEquipe.getEmail2());
 		aEquipe.setTelephone1(newEquipe.getTelephone1());
 		aEquipe.setTelephone2(newEquipe.getTelephone2());
-		Client client = clientRepository.findById(newEquipe.getIdClient()).orElseThrow(() -> new ClientNotFoundException(newEquipe.getId()));
+		Client client = clientRepository.findById(newEquipe.getIdClient())
+				.orElseThrow(() -> new ClientNotFoundException(newEquipe.getId()));
 		aEquipe.setClient(client);
 		equipeRepository.save(aEquipe);
 		return new EquipeDto(aEquipe);

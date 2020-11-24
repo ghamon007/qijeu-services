@@ -18,7 +18,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +32,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/questionnaire")
-@CrossOrigin(origins = "*")
 public class QuestionnaireController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QuestionnaireController.class);
@@ -64,8 +62,7 @@ public class QuestionnaireController {
     @PostMapping(path = "/create", consumes = { "application/json", "multipart/form-data" })
     @Async
     public QuestionnaireDto saveQuestionnaire(@RequestParam("fichier") MultipartFile file,
-            @RequestParam("nom") String nom, 
-            @RequestParam("description") String description) {
+            @RequestParam("nom") String nom, @RequestParam("description") String description) {
         // public QuestionnaireDto saveQuestionnaire(@RequestParam QuestionnaireDto
         // questionnaireDto) {
         /**
@@ -76,7 +73,7 @@ public class QuestionnaireController {
         LOGGER.info("Fichier" + file.getOriginalFilename());
         LOGGER.info("Libelle " + nom);
         LOGGER.info("Description " + description);
-        
+
         Questionnaire questionnaire = new Questionnaire();
         questionnaire.setNom(nom);
         questionnaire.setDescription(description);
@@ -91,15 +88,15 @@ public class QuestionnaireController {
     }
 
     @GetMapping("/files/{id}")
-	@ResponseBody
-	public ResponseEntity<Resource> serveFile(@PathVariable Long id) {
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable Long id) {
         Questionnaire aQuestionnaire = questionnaireRepository.findById(id)
                 .orElseThrow(() -> new QuestionnaireNotFoundException(id));
 
-		Resource file = new ByteArrayResource(aQuestionnaire.getFichier());
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-				"attachment; filename=\"" + aQuestionnaire.getNom()+".zip" + "\"").body(file);
-	}
+        Resource file = new ByteArrayResource(aQuestionnaire.getFichier());
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + aQuestionnaire.getNom() + ".zip" + "\"").body(file);
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
@@ -112,12 +109,10 @@ public class QuestionnaireController {
                 .orElseThrow(() -> new QuestionnaireNotFoundException(id));
         aQuestionnaire.setNom(newQuestionnaire.getNom());
         aQuestionnaire.setDescription(newQuestionnaire.getDescription());
-/**        try {
-            aQuestionnaire.set(newQuestionnaire.getFichier().getBytes());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }**/
+        /**
+         * try { aQuestionnaire.set(newQuestionnaire.getFichier().getBytes()); } catch
+         * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); }
+         **/
         questionnaireRepository.save(aQuestionnaire);
         return new QuestionnaireDto(aQuestionnaire);
     }

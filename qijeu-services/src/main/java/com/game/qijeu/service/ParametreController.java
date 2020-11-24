@@ -8,7 +8,6 @@ import com.game.qijeu.exception.ClientNotFoundException;
 import com.game.qijeu.jpa.repository.ParametreRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/param")
-@CrossOrigin(origins = "*")
 public class ParametreController {
 
 	@Autowired
 	ParametreRepository parametreRepository;
-
 
 	@GetMapping("/list")
 	public List<Parametre> all() {
@@ -41,7 +38,7 @@ public class ParametreController {
 		return result;
 	}
 
-    @GetMapping("/list/profil")
+	@GetMapping("/list/profil")
 	public List<Parametre> getProfils() {
 		List<Parametre> result = new ArrayList<>();
 		parametreRepository.findByType("PROFIL").forEach(result::add);
@@ -66,11 +63,11 @@ public class ParametreController {
 	@PutMapping("/{id}")
 	public Parametre replace(@RequestBody Parametre newParam, @PathVariable Long id) {
 		Parametre aParam = this.one(id);
-        aParam.setCode(newParam.getCode());
-        aParam.setLibelle(newParam.getLibelle());
-        aParam.setDescription(newParam.getDescription());
-        aParam.setType(newParam.getType());
-        
+		aParam.setCode(newParam.getCode());
+		aParam.setLibelle(newParam.getLibelle());
+		aParam.setDescription(newParam.getDescription());
+		aParam.setType(newParam.getType());
+
 		parametreRepository.save(aParam);
 		return aParam;
 	}

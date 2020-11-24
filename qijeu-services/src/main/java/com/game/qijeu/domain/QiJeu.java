@@ -1,13 +1,14 @@
 package com.game.qijeu.domain;
 
-
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -16,7 +17,7 @@ import com.game.qijeu.dto.QiJeuDto;
 
 @Entity
 public class QiJeu extends BaseEntity {
-	
+
 	/**
 	 * 
 	 */
@@ -24,23 +25,24 @@ public class QiJeu extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "qijeu_generator")
-	@SequenceGenerator(name="qijeu_generator", sequenceName = "seq_id_qijeu", allocationSize=50)	
+	@SequenceGenerator(name = "qijeu_generator", sequenceName = "seq_id_qijeu", allocationSize = 50)
 	private Long id;
-	
+
 	private String nom;
-	
-	
+
 	private Date dateQiJeu;
-	
+
 	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "competition_id_fkey"))
 	private Competition competition;
 
 	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "questionnaire_id_fkey"))
 	private Questionnaire questionnaire;
 
-	@OneToMany
+	@OneToMany(mappedBy = "qijeu")
 	private List<QiJeuResultat> resultats;
-	
+
 	public Date getDateQiJeu() {
 		return dateQiJeu;
 	}
@@ -92,13 +94,13 @@ public class QiJeu extends BaseEntity {
 	public QiJeu() {
 	}
 
-	public QiJeu(QiJeuDto qiJeuDto){
+	public QiJeu(QiJeuDto qiJeuDto) {
 		this.nom = qiJeuDto.getNom();
 		this.dateQiJeu = qiJeuDto.getDateQiJeu();
-		this.id= qiJeuDto.getId();
+		this.id = qiJeuDto.getId();
 	}
 
-	public QiJeu(String nom, Date dateQiJeu, Competition competition){
+	public QiJeu(String nom, Date dateQiJeu, Competition competition) {
 		this.nom = nom;
 		this.dateQiJeu = dateQiJeu;
 		this.competition = competition;

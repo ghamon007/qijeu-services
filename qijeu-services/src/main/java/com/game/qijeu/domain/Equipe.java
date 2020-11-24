@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import com.game.qijeu.dto.EquipeDto;
@@ -23,7 +25,7 @@ public class Equipe extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipe_generator")
-	@SequenceGenerator(name="equipe_generator", sequenceName = "seq_id_equipe", allocationSize=50)	
+	@SequenceGenerator(name = "equipe_generator", sequenceName = "seq_id_equipe", allocationSize = 50)
 	private Long id;
 
 	@Column(nullable = false, length = 50)
@@ -38,10 +40,11 @@ public class Equipe extends BaseEntity {
 	private String telephone2;
 
 	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "client_id_fkey"))
 	private Client client;
-	
-	@ManyToMany
-	private List<QiJeu> qiJeux;
+
+	@OneToMany(mappedBy = "equipe")
+	private List<QiJeuResultat> qiJeuResultats;
 
 	public String getNom() {
 		return nom;
@@ -50,7 +53,6 @@ public class Equipe extends BaseEntity {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
 
 	public Client getClient() {
 		return client;
@@ -92,20 +94,20 @@ public class Equipe extends BaseEntity {
 		this.telephone2 = telephone2;
 	}
 
-	public List<QiJeu> getQiJeux() {
-		return qiJeux;
-	}
-
-	public void setQiJeux(List<QiJeu> qiJeux) {
-		this.qiJeux = qiJeux;
-	}
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public List<QiJeuResultat> getQiJeuResultats() {
+		return qiJeuResultats;
+	}
+
+	public void setQiJeuResultats(List<QiJeuResultat> qiJeuResultats) {
+		this.qiJeuResultats = qiJeuResultats;
 	}
 
 	public Equipe() {
@@ -117,7 +119,6 @@ public class Equipe extends BaseEntity {
 		this.client = client;
 	}
 
-
 	public Equipe(EquipeDto equipeDto) {
 		this.id = equipeDto.getId();
 		this.nom = equipeDto.getNom();
@@ -126,6 +127,5 @@ public class Equipe extends BaseEntity {
 		this.telephone1 = equipeDto.getTelephone1();
 		this.telephone2 = equipeDto.getTelephone2();
 	}
-
 
 }

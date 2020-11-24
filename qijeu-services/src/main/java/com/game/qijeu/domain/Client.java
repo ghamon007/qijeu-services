@@ -13,9 +13,9 @@ import javax.persistence.SequenceGenerator;
 
 import com.game.qijeu.dto.ClientDto;
 
-@Entity 
+@Entity
 public class Client extends BaseEntity {
- 
+
 	/**
 	 * 
 	 */
@@ -50,10 +50,10 @@ public class Client extends BaseEntity {
 
 	private String telephone2;
 
-	@OneToMany
+	@OneToMany(mappedBy = "client")
 	private List<Equipe> equipes;
 
-	@OneToMany
+	@OneToMany(mappedBy = "client")
 	private List<Competition> competitions;
 
 	public Client() {
@@ -123,7 +123,6 @@ public class Client extends BaseEntity {
 		this.pays = pays;
 	}
 
-
 	public List<Equipe> getEquipes() {
 		return equipes;
 	}
@@ -131,7 +130,6 @@ public class Client extends BaseEntity {
 	public void setEquipes(List<Equipe> equipes) {
 		this.equipes = equipes;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -173,14 +171,14 @@ public class Client extends BaseEntity {
 		this.id = id;
 	}
 
-	public void addCompetition(Competition competition){
-		if (competitions == null){
+	public void addCompetition(Competition competition) {
+		if (competitions == null) {
 			competitions = new ArrayList<>();
 		}
 		competitions.add(competition);
 	}
 
-	public void deleteCompetition(Competition competition){
+	public void deleteCompetition(Competition competition) {
 		competitions.remove(competition);
 	}
 

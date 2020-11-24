@@ -6,26 +6,36 @@ server:
 spring:
   datasource:
     platform: "postgres"
-    url: "jdbc:postgresql://localhost:5432/qijeu_db"
+    url: "jdbc:postgresql://localhost:5432/qijeu_db_dev"
     username: "qijeu_user"
     password: "qijeu_pwd"
   jpa:
     hibernate:
-      ddl-auto: "create-drop"
+      ddl-auto: "validate"
     properties:
       hibernate:
         dialect: "org.hibernate.dialect.PostgreSQLDialect"
+        current_session_context_class: "thread"
+        format_sql: true  
       jdbc:
         lob:
           non_contextual_creation: true
-    current_session_context_class: "thread"
-    format_sql: true
-  open-in-view: false
+      javax:
+        persistence:
+          schema-generation:
+            scripts:
+              action: "create"
+              create-target: "create.sql"
+              create-source: "metadata"
+    open-in-view: false
   servlet:
     multipart:
       enabled: true
       max-file-size: "200MB"
       max-request-size: "200MB"
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase-outputChangeLog.yaml
 #security:
 #  oauth2:
 #    client:

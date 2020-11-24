@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -24,12 +26,11 @@ public class Competition extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "competition_generator")
-	@SequenceGenerator(name="competition_generator", sequenceName = "seq_id_competition", allocationSize=50)	
+	@SequenceGenerator(name = "competition_generator", sequenceName = "seq_id_competition", allocationSize = 50)
 	private Long id;
 
 	@Column(nullable = false, length = 50)
 	private String nom;
-
 
 	private Date dateDebut;
 
@@ -37,12 +38,11 @@ public class Competition extends BaseEntity {
 
 	private Date dateMaj;
 
-	
-	@ManyToOne
+	@ManyToOne()
+	@JoinColumn(foreignKey = @ForeignKey(name = "client_id_fkey"))
 	private Client client;
 
-
-	@OneToMany
+	@OneToMany(mappedBy = "competition")
 	private List<QiJeu> qiJeux;
 
 	public String getNom() {
@@ -110,8 +110,8 @@ public class Competition extends BaseEntity {
 		this.dateDebut = competitionDto.getDateDebut();
 		this.dateFin = competitionDto.getDateFin();
 	}
-	
-	public Competition(String nom, Date dateDebut, Date dateFin,Client client){
+
+	public Competition(String nom, Date dateDebut, Date dateFin, Client client) {
 		this.nom = nom;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;

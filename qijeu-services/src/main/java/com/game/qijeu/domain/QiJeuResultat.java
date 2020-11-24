@@ -1,9 +1,11 @@
 package com.game.qijeu.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -29,8 +31,11 @@ public class QiJeuResultat extends BaseEntity {
 	private Integer classement;
 
 	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "qijeu_id_fkey"))
 	private QiJeu qijeu;
 
+	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "equipe_id_fkey"))
 	private Equipe equipe;
 
 	private Integer points;

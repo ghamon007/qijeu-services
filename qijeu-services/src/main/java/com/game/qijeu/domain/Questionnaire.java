@@ -35,7 +35,7 @@ public class Questionnaire extends BaseEntity {
 	@Lob
 	private byte[] fichier;
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "questionnaires")
 	private List<Question> questions;
 
 	public String getNom() {

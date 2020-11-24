@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/competition")
-@CrossOrigin(origins = "*")
 public class CompetitionController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CompetitionController.class);

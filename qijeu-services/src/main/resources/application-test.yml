@@ -1,0 +1,14 @@
+server:
+  port: 4987
+
+spring:
+  datasource:
+    platform: "postgres"
+    url: "jdbc:postgresql://localhost:5432/qijeu_db"
+    username: "qijeu_user"
+    password: "qijeu_pwd"
+  jpa:
+    hibernate:
+      ddl-auto: "validate"
+
+

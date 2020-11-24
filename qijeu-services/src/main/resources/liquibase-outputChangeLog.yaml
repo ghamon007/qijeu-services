@@ -1,0 +1,757 @@
+databaseChangeLog:
+    - changeSet:
+          id: QIJEUDB-001
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: client_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              name: adresse
+                              type: VARCHAR(100)
+                        - column:
+                              name: code_postal
+                              type: VARCHAR(5)
+                        - column:
+                              name: commune
+                              type: VARCHAR(64)
+                        - column:
+                              name: email1
+                              type: VARCHAR(255)
+                        - column:
+                              name: email2
+                              type: VARCHAR(255)
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: nom
+                              type: VARCHAR(50)
+                        - column:
+                              name: pays
+                              type: VARCHAR(100)
+                        - column:
+                              name: telephone1
+                              type: VARCHAR(20)
+                        - column:
+                              name: telephone2
+                              type: VARCHAR(20)
+                    tableName: client
+    - changeSet:
+          id: QIJEUDB-002
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: utilisateur_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: login
+                              type: VARCHAR(255)
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: password
+                              type: VARCHAR(255)
+                        - column:
+                              name: client_id
+                              type: BIGINT
+                        - column:
+                              name: profil_id
+                              type: BIGINT
+                        - column:
+                              name: statut_id
+                              type: BIGINT
+                    tableName: utilisateur
+    - changeSet:
+          id: QIJEUDB-003
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: parametre_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: code
+                              type: VARCHAR(32)
+                        - column:
+                              name: description
+                              type: VARCHAR(255)
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: libelle
+                              type: VARCHAR(32)
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: type
+                              type: VARCHAR(32)
+                    tableName: parametre
+    - changeSet:
+          id: QIJEUDB-004
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: competition_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              name: date_debut
+                              type: TIMESTAMP
+                        - column:
+                              name: date_fin
+                              type: TIMESTAMP
+                        - column:
+                              name: date_maj
+                              type: TIMESTAMP
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: nom
+                              type: VARCHAR(50)
+                        - column:
+                              name: client_id
+                              type: BIGINT
+                    tableName: competition
+    - changeSet:
+          id: QIJEUDB-005
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: qi_jeu_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              name: date_qi_jeu
+                              type: TIMESTAMP
+                        - column:
+                              name: nom
+                              type: VARCHAR(255)
+                        - column:
+                              name: competition_id
+                              type: BIGINT
+                        - column:
+                              name: questionnaire_id
+                              type: BIGINT
+                    tableName: qi_jeu
+    - changeSet:
+          id: QIJEUDB-006
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: equipe_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              name: email1
+                              type: VARCHAR(255)
+                        - column:
+                              name: email2
+                              type: VARCHAR(255)
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: nom
+                              type: VARCHAR(50)
+                        - column:
+                              name: telephone1
+                              type: VARCHAR(255)
+                        - column:
+                              name: telephone2
+                              type: VARCHAR(255)
+                        - column:
+                              name: client_id
+                              type: BIGINT
+                    tableName: equipe
+    - changeSet:
+          id: QIJEUDB-007
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: qi_jeu_resultat_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              name: classement
+                              type: INTEGER
+                        - column:
+                              name: points
+                              type: INTEGER
+                        - column:
+                              name: equipe_id
+                              type: BIGINT
+                        - column:
+                              name: qijeu_id
+                              type: BIGINT
+                    tableName: qi_jeu_resultat
+    - changeSet:
+          id: QIJEUDB-008
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: question_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              name: libelle
+                              type: VARCHAR(255)
+                        - column:
+                              name: metadonnees
+                              type: VARCHAR(255)
+                        - column:
+                              name: reponse
+                              type: VARCHAR(255)
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: version
+                              type: INTEGER
+                        - column:
+                              name: statut_id
+                              type: BIGINT
+                        - column:
+                              name: theme_id
+                              type: BIGINT
+                    tableName: question
+    - changeSet:
+          id: QIJEUDB-009
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: question_id
+                              type: BIGINT
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: support_id
+                              type: BIGINT
+                    tableName: question_support
+    - changeSet:
+          id: QIJEUDB-10
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: questionnaire_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              name: description
+                              type: VARCHAR(255)
+                        - column:
+                              name: fichier
+                              type: OID
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: nom
+                              type: VARCHAR(255)
+                    tableName: questionnaire
+    - changeSet:
+          id: QIJEUDB-11
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: questionnaire_id
+                              type: BIGINT
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: question_id
+                              type: BIGINT
+                    tableName: questionnaire_question
+    - changeSet:
+          id: QIJEUDB-12
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: support_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: chemin_fichier
+                              type: VARCHAR(255)
+                        - column:
+                              name: description
+                              type: VARCHAR(255)
+                        - column:
+                              name: meta_donnees
+                              type: VARCHAR(255)
+                    tableName: support
+    - changeSet:
+          id: QIJEUDB-013
+          author: guillaume (generated)
+          changes:
+              - createTable:
+                    columns:
+                        - column:
+                              constraints:
+                                  nullable: false
+                                  primaryKey: true
+                                  primaryKeyName: theme_pkey
+                              name: id
+                              type: BIGINT
+                        - column:
+                              name: date_creation
+                              type: TIMESTAMP
+                        - column:
+                              name: date_modification
+                              type: TIMESTAMP
+                        - column:
+                              name: description
+                              type: VARCHAR(255)
+                        - column:
+                              constraints:
+                                  nullable: false
+                              name: libelle
+                              type: VARCHAR(32)
+                    tableName: theme
+    - changeSet:
+          id: QIJEUDB-014
+          author: guillaume (generated)
+          changes:
+              - addForeignKeyConstraint:
+                    baseColumnNames: client_id
+                    baseTableName: utilisateur
+                    constraintName: client_id_fkey
+                    deferrable: false
+                    initiallyDeferred: false
+                    onDelete: NO ACTION
+                    onUpdate: NO ACTION
+                    referencedColumnNames: id
+                    referencedTableName: client
+                    validate: true
+    - changeSet:
+          id: QIJEUDB-015
+          author: guillaume (generated)
+          changes:
+              - addUniqueConstraint:
+                    columnNames: login
+                    constraintName: login_ukey
+                    tableName: utilisateur
+    - changeSet:
+          id: QIJEUDB-016
+          author: guillaume (generated)
+          changes:
+              - addUniqueConstraint:
+                    columnNames: code
+                    constraintName: code_ukey
+                    tableName: parametre
+    - changeSet:
+          id: QIJEUDB-017
+          author: guillaume (generated)
+          changes:
+              - addForeignKeyConstraint:
+                    baseColumnNames: profil_id
+                    baseTableName: utilisateur
+                    constraintName: profil_id_fkey
+                    deferrable: false
+                    initiallyDeferred: false
+                    onDelete: NO ACTION
+                    onUpdate: NO ACTION
+                    referencedColumnNames: id
+                    referencedTableName: parametre
+                    validate: true
+    - changeSet:
+          id: QIJEUDB-018
+          author: guillaume (generated)
+          changes:
+              - addForeignKeyConstraint:
+                    baseColumnNames: statut_id
+                    baseTableName: question
+                    constraintName: statut_id_fkey
+                    deferrable: false
+                    initiallyDeferred: false
+                    onDelete: NO ACTION
+                    onUpdate: NO ACTION
+                    referencedColumnNames: id
+                    referencedTableName: parametre
+                    validate: true
+    - changeSet:
+          id: QIJEUDB-019
+          author: guillaume (generated)
+          changes:
+              - addForeignKeyConstraint:
+                    baseColumnNames: competition_id
+                    baseTableName: qi_jeu
+                    constraintName: competition_id_fkey
+                    deferrable: false
+                    initiallyDeferred: false
+                    onDelete: NO ACTION
+                    onUpdate: NO ACTION
+                    referencedColumnNames: id
+                    referencedTableName: competition
+                    validate: true
+    - changeSet:
+          id: QIJEUDB-020
+          author: guillaume (generated)
+          changes:
+              - addForeignKeyConstraint:
+                    baseColumnNames: equipe_id
+                    baseTableName: qi_jeu_resultat
+                    constraintName: equipe_id_fkey
+                    deferrable: false
+                    initiallyDeferred: false
+                    onDelete: NO ACTION
+                    onUpdate: NO ACTION
+                    referencedColumnNames: id
+                    referencedTableName: equipe
+                    validate: true
+    - changeSet:
+          id: QIJEUDB-021
+          author: guillaume (generated)
+          changes:
+              - addForeignKeyConstraint:
+                    baseColumnNames: qijeu_id
+                    baseTableName: qi_jeu_resultat
+                    constraintName: qijeu_id_fkey
+                    deferrable: false
+                    initiallyDeferred: false
+                    onDelete: NO ACTION
+                    onUpdate: NO ACTION
+                    referencedColumnNames: id
+                    referencedTableName: qi_jeu
+                    validate: true
+    - changeSet:
+          id: QIJEUDB-022
+          author: guillaume (generated)
+          changes:
+              - addForeignKeyConstraint:
+                    baseColumnNames: question_id
+                    baseTableName: question_support
+                    constraintName: question_id_fkey
+                    deferrable: false
+                    initiallyDeferred: false
+                    onDelete: NO ACTION
+                    onUpdate: NO ACTION
+                    referencedColumnNames: id
+                    referencedTableName: question
+                    validate: true
+    - changeSet:
+          id: QIJEUDB-023
+          author: guillaume (generated)
+          changes:
+              - addUniqueConstraint:
+                    columnNames: question_id, support_id
+                    constraintName: question_support_ukey
+                    tableName: question_support
+    - changeSet:
+          id: QIJEUDB-024
+          author: guillaume (generated)
+          changes:
+              - addUniqueConstraint:
+                    columnNames: questionnaire_id, question_id
+                    constraintName: questionnaire_question_ukey
+                    tableName: questionnaire_question
+    - changeSet:
+          id: QIJEUDB-025
+          author: guillaume (generated)
+          changes:
+              - addForeignKeyConstraint:
+                    baseColumnNames: questionnaire_id
+                    baseTableName: qi_jeu
+                    constraintName: questionnaire_id_fkey
+                    deferrable: false
+                    initiallyDeferred: false
+                    onDelete: NO ACTION
+                    onUpdate: NO ACTION
+                    referencedColumnNames: id
+                    referencedTableName: questionnaire
+                    validate: true
+    - changeSet:
+          id: QIJEUDB-026
+          author: guillaume (generated)
+          changes:
+              - addForeignKeyConstraint:
+                    baseColumnNames: theme_id
+                    baseTableName: question
+                    constraintName: theme_id_fkey
+                    deferrable: false
+                    initiallyDeferred: false
+                    onDelete: NO ACTION
+                    onUpdate: NO ACTION
+                    referencedColumnNames: id
+                    referencedTableName: theme
+                    validate: true
+    - changeSet:
+          id: QIJEUDB-027
+          author: guillaume (generated)
+          changes:
+              - addForeignKeyConstraint:
+                    baseColumnNames: support_id
+                    baseTableName: question_support
+                    constraintName: support_id_fkey
+                    deferrable: false
+                    initiallyDeferred: false
+                    onDelete: NO ACTION
+                    onUpdate: NO ACTION
+                    referencedColumnNames: id
+                    referencedTableName: support
+                    validate: true
+    - changeSet:
+          id: QIJEUDB-028
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_client
+                    startValue: 1
+    - changeSet:
+          id: QIJEUDB-029
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_competition
+                    startValue: 1
+    - changeSet:
+          id: QIJEUDB-030
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_equipe
+                    startValue: 1
+    - changeSet:
+          id: QIJEUDB-031
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_param
+                    startValue: 1
+    - changeSet:
+          id: QIJEUDB-032
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_qijeu
+                    startValue: 1
+    - changeSet:
+          id: QIJEUDB-033
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_qijeu_resultat
+                    startValue: 1
+    - changeSet:
+          id: QIJEUDB-034
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_question
+                    startValue: 1
+    - changeSet:
+          id: QIJEUDB-035
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_questionnaire
+                    startValue: 1
+    - changeSet:
+          id: QIJEUDB-036
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_support
+                    startValue: 1
+    - changeSet:
+          id: QIJEUDB-037
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_theme
+                    startValue: 1
+    - changeSet:
+          id: QIJEUDB-038
+          author: guillaume (generated)
+          changes:
+              - createSequence:
+                    cacheSize: 1
+                    cycle: false
+                    dataType: bigint
+                    incrementBy: 50
+                    maxValue: 9223372036854775807
+                    minValue: 1
+                    sequenceName: seq_id_utilisateur
+                    startValue: 1

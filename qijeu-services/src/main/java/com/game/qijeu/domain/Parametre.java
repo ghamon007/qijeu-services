@@ -6,8 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "code" }, name = "code_ukey") })
 public class Parametre extends BaseEntity {
 
 	/**
@@ -17,7 +20,7 @@ public class Parametre extends BaseEntity {
 
 	public Parametre() {
 	}
-	
+
 	public Parametre(String code, String libelle, String type) {
 		this.code = code;
 		this.libelle = libelle;
@@ -33,19 +36,19 @@ public class Parametre extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "param_generator")
-	@SequenceGenerator(name="param_generator", sequenceName = "seq_id_param", allocationSize=50)	
+	@SequenceGenerator(name = "param_generator", sequenceName = "seq_id_param", allocationSize = 50)
 	private Long id;
 
-	@Column(nullable=false,length=32,unique = true)
+	@Column(nullable = false, length = 32)
 	private String code;
 
-	@Column(nullable=false,length=32)
+	@Column(nullable = false, length = 32)
 	private String libelle;
-	
-	@Column(length=255)
+
+	@Column(length = 255)
 	private String description;
 
-	@Column(nullable=false,length=32)
+	@Column(nullable = false, length = 32)
 	private String type;
 
 	public String getCode() {
@@ -80,6 +83,4 @@ public class Parametre extends BaseEntity {
 		this.type = type;
 	}
 
-
-	
 }

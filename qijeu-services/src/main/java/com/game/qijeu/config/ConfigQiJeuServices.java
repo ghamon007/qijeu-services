@@ -27,11 +27,14 @@ import org.springframework.util.unit.DataSize;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.MultipartFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-class LoadDatabase {
+class ConfigQiJeuServices {
 
-  private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+  private static final Logger log = LoggerFactory.getLogger(ConfigQiJeuServices.class);
 
   @Value("${spring.servlet.multipart.max-file-size}")
   private String maxFileSize;
@@ -58,6 +61,17 @@ class LoadDatabase {
     return multipartResolver;
   }
 
+  @Configuration
+  @EnableWebMvc
+  public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+      registry.addMapping("https://hamonavie.fr");
+      registry.addMapping("http://localhost");
+    }
+  }
+
   @Bean
   CommandLineRunner initDatabase(ParametreRepository repository, UtilisateurRepository userRepository,
       ClientRepository clientRepository, CompetitionRepository competitionRepository, EquipeRepository equipeRepository,
@@ -66,14 +80,14 @@ class LoadDatabase {
     return args -> {
 
       Parametre profilAdmin = new Parametre("PROFIL_ADMIN", "Administrateur", "PROFIL");
-      log.info("Preloading " + repository.save(profilAdmin));
+      log.debug("Preloading " + repository.save(profilAdmin));
       Parametre profilGestion = new Parametre("PROFIL_MANAGER", "Gestionnaire", "PROFIL");
-      log.info("Preloading " + repository.save(profilGestion));
+      log.debug("Preloading " + repository.save(profilGestion));
       Parametre statutActif = new Parametre("STATUT_ACTIF", "Actif", "STATUT");
-      log.info("Preloading " + repository.save(statutActif));
-      log.info("Preloading " + repository.save(new Parametre("STATUT_BLOQUE", "Bloqué", "STATUT")));
-      log.info("Preloading " + repository.save(new Parametre("STATUT_INIT", "Initialisé", "STATUT")));
-      log.info("Preloading " + userRepository.save(new Utilisateur("admin", "admin", statutActif, profilAdmin)));
+      log.debug("Preloading " + repository.save(statutActif));
+      log.debug("Preloading " + repository.save(new Parametre("STATUT_BLOQUE", "Bloqué", "STATUT")));
+      log.debug("Preloading " + repository.save(new Parametre("STATUT_INIT", "Initialisé", "STATUT")));
+      log.debug("Preloading " + userRepository.save(new Utilisateur("admin", "admin", statutActif, profilAdmin)));
 
       if (modeTest) {
         Client[] clients = new Client[nbClients];
@@ -91,7 +105,7 @@ class LoadDatabase {
             commune = "Bordeaux";
           }
           clients[i] = new Client("Bar de test " + i, adresse, codePostal, commune, "France");
-          log.info("Preloading " + clientRepository.save(clients[i]));
+          log.debug("Preloading " + clientRepository.save(clients[i]));
           // Creation de la saison 2020-2021 pour chaque client
           Calendar dateDebut = Calendar.getInstance();
           Calendar dateFin = Calendar.getInstance();
@@ -99,12 +113,12 @@ class LoadDatabase {
           Competition competition = new Competition("Saison 2020-2021", dateDebut.getTime(), dateFin.getTime(),
               clients[i]);
           clients[i].addCompetition(competition);
-          log.info("Preloading " + competitionRepository.save(competition));
+          log.debug("Preloading " + competitionRepository.save(competition));
           // Creation des equipes de test par client
           Equipe[] equipes = new Equipe[nbEquipes];
           for (int j = 0; j < equipes.length; j++) {
             equipes[j] = new Equipe("Equipe " + j, "equipe" + j + "@gmail.com", clients[i]);
-            log.info("Preloading " + equipeRepository.save(equipes[j]));
+            log.debug("Preloading " + equipeRepository.save(equipes[j]));
           }
           // Creation des qiJux de test par client
           QiJeu[] qiJeux = new QiJeu[nbJeux];
@@ -112,11 +126,11 @@ class LoadDatabase {
             Calendar dateQiJeu = Calendar.getInstance();
             dateQiJeu.add(Calendar.MONTH, k);
             qiJeux[k] = new QiJeu("Journee " + k, dateQiJeu.getTime(), clients[i].getCompetitions().get(0));
-            log.info("Preloading " + qiJeuRepository.save(qiJeux[k]));
+            log.debug("Preloading " + qiJeuRepository.save(qiJeux[k]));
             for (Equipe equipe : equipes) {
               Integer points = (int) Math.round(Math.random() * 100);
               QiJeuResultat qiJeuResultat = new QiJeuResultat(qiJeux[k], equipe, points);
-              log.info("Preloading " + qiJeuResultatRepository.save(qiJeuResultat));
+              log.debug("Preloading " + qiJeuResultatRepository.save(qiJeuResultat));
             }
 
           }
