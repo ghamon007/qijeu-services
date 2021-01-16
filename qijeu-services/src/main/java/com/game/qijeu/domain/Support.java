@@ -20,7 +20,7 @@ public class Support extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "support_generator")
-	@SequenceGenerator(name = "support_generator", sequenceName = "seq_id_support", allocationSize = 50)
+	@SequenceGenerator(name = "support_generator", sequenceName = "seq_id_support", allocationSize = 1)
 	private Long id;
 
 	@Column(nullable = false)

@@ -19,7 +19,7 @@ public class Theme extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "theme_generator")
-	@SequenceGenerator(name = "theme_generator", sequenceName = "seq_id_theme", allocationSize = 50)
+	@SequenceGenerator(name = "theme_generator", sequenceName = "seq_id_theme", allocationSize = 1)
 	private Long id;
 
 	@Column(nullable = false, length = 32)

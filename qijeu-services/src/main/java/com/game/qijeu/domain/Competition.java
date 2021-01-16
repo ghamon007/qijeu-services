@@ -26,7 +26,7 @@ public class Competition extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "competition_generator")
-	@SequenceGenerator(name = "competition_generator", sequenceName = "seq_id_competition", allocationSize = 50)
+	@SequenceGenerator(name = "competition_generator", sequenceName = "seq_id_competition", allocationSize = 1)
 	private Long id;
 
 	@Column(nullable = false, length = 50)

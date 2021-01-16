@@ -36,7 +36,7 @@ public class Parametre extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "param_generator")
-	@SequenceGenerator(name = "param_generator", sequenceName = "seq_id_param", allocationSize = 50)
+	@SequenceGenerator(name = "param_generator", sequenceName = "seq_id_param", allocationSize = 1)
 	private Long id;
 
 	@Column(nullable = false, length = 32)

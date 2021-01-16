@@ -25,7 +25,7 @@ public class QiJeu extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "qijeu_generator")
-	@SequenceGenerator(name = "qijeu_generator", sequenceName = "seq_id_qijeu", allocationSize = 50)
+	@SequenceGenerator(name = "qijeu_generator", sequenceName = "seq_id_qijeu", allocationSize = 1)
 	private Long id;
 
 	private String nom;

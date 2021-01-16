@@ -25,7 +25,7 @@ public class Equipe extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipe_generator")
-	@SequenceGenerator(name = "equipe_generator", sequenceName = "seq_id_equipe", allocationSize = 50)
+	@SequenceGenerator(name = "equipe_generator", sequenceName = "seq_id_equipe", allocationSize = 1)
 	private Long id;
 
 	@Column(nullable = false, length = 50)

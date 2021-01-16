@@ -3,17 +3,23 @@ package com.game.qijeu.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.game.qijeu.domain.Utilisateur;
 
 public class UtilisateurDto implements Serializable {
 
     /**
+     * 
      *
      */
     private static final long serialVersionUID = 5902065575591131273L;
 
     private Long id;
 
+    @NotNull
+    @Size(min = 3, max = 32)
     private String login;
 
     private String password;

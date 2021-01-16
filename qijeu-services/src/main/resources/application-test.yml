@@ -12,3 +12,5 @@ spring:
       ddl-auto: "validate"
 
 
+qijeu:
+  cors: "https://hamonavie.fr"

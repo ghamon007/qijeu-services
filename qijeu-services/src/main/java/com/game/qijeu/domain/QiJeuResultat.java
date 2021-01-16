@@ -25,7 +25,7 @@ public class QiJeuResultat extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "qijeu_resultat_generator")
-	@SequenceGenerator(name = "qijeu_resultat_generator", sequenceName = "seq_id_qijeu_resultat", allocationSize = 50)
+	@SequenceGenerator(name = "qijeu_resultat_generator", sequenceName = "seq_id_qijeu_resultat", allocationSize = 1)
 	private Long id;
 
 	private Integer classement;

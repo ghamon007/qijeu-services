@@ -27,7 +27,7 @@ public class Question extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_generator")
-	@SequenceGenerator(name = "question_generator", sequenceName = "seq_id_question", allocationSize = 50)
+	@SequenceGenerator(name = "question_generator", sequenceName = "seq_id_question", allocationSize = 1)
 	private Long id;
 
 	private String libelle;

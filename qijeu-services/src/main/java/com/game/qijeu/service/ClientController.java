@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/client")
+@CrossOrigin(origins = { "http://localhost:8090", "https://hamonavie.fr/api", "*" })
 public class ClientController {
 
 	@Autowired

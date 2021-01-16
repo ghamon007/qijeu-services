@@ -9,6 +9,7 @@ import com.game.qijeu.domain.Parametre;
 import com.game.qijeu.domain.QiJeu;
 import com.game.qijeu.domain.QiJeuResultat;
 import com.game.qijeu.domain.Utilisateur;
+import com.game.qijeu.exception.ParametreNotFoundException;
 import com.game.qijeu.jpa.repository.ClientRepository;
 import com.game.qijeu.jpa.repository.CompetitionRepository;
 import com.game.qijeu.jpa.repository.EquipeRepository;
@@ -23,6 +24,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -51,6 +54,9 @@ class ConfigQiJeuServices {
   @Value("${qijeu.nb.jeux}")
   private int nbJeux;
 
+  @Value("${qijeu.cors}")
+  private String cors;
+
   @Bean(name = MultipartFilter.DEFAULT_MULTIPART_RESOLVER_BEAN_NAME)
   protected MultipartResolver getMultipartResolver() {
     CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
@@ -61,35 +67,24 @@ class ConfigQiJeuServices {
     return multipartResolver;
   }
 
-  @Configuration
-  @EnableWebMvc
-  public class WebConfig implements WebMvcConfigurer {
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-      registry.addMapping("https://hamonavie.fr");
-      registry.addMapping("http://localhost");
-    }
-  }
+  // @Bean
+  // public PasswordEncoder passwordEncoder() {
+  // PasswordEncoder encoder = new BCryptPasswordEncoder();
+  // return encoder;
+  // }
 
   @Bean
-  CommandLineRunner initDatabase(ParametreRepository repository, UtilisateurRepository userRepository,
-      ClientRepository clientRepository, CompetitionRepository competitionRepository, EquipeRepository equipeRepository,
-      QiJeuRepository qiJeuRepository, QiJeuResultatRepository qiJeuResultatRepository) {
+  CommandLineRunner initDatabase(ClientRepository clientRepository, CompetitionRepository competitionRepository,
+      EquipeRepository equipeRepository, QiJeuRepository qiJeuRepository,
+      QiJeuResultatRepository qiJeuResultatRepository) {
 
     return args -> {
-
-      Parametre profilAdmin = new Parametre("PROFIL_ADMIN", "Administrateur", "PROFIL");
-      log.debug("Preloading " + repository.save(profilAdmin));
-      Parametre profilGestion = new Parametre("PROFIL_MANAGER", "Gestionnaire", "PROFIL");
-      log.debug("Preloading " + repository.save(profilGestion));
-      Parametre statutActif = new Parametre("STATUT_ACTIF", "Actif", "STATUT");
-      log.debug("Preloading " + repository.save(statutActif));
-      log.debug("Preloading " + repository.save(new Parametre("STATUT_BLOQUE", "Bloqué", "STATUT")));
-      log.debug("Preloading " + repository.save(new Parametre("STATUT_INIT", "Initialisé", "STATUT")));
-      log.debug("Preloading " + userRepository.save(new Utilisateur("admin", "admin", statutActif, profilAdmin)));
-
       if (modeTest) {
+        qiJeuResultatRepository.deleteAll();
+        qiJeuRepository.deleteAll();
+        competitionRepository.deleteAll();
+        equipeRepository.deleteAll();
+        clientRepository.deleteAll();
         Client[] clients = new Client[nbClients];
         String adresse;
         String codePostal;
@@ -139,4 +134,5 @@ class ConfigQiJeuServices {
 
     };
   }
+
 }

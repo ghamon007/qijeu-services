@@ -25,7 +25,7 @@ public class Utilisateur extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "utilisateur_generator")
-	@SequenceGenerator(name = "utilisateur_generator", sequenceName = "seq_id_utilisateur", allocationSize = 50)
+	@SequenceGenerator(name = "utilisateur_generator", sequenceName = "seq_id_utilisateur", allocationSize = 1)
 	private Long id;
 
 	@Column(nullable = false)
@@ -59,7 +59,6 @@ public class Utilisateur extends BaseEntity {
 	public Utilisateur(UtilisateurDto utilisateurDto) {
 		this.id = utilisateurDto.getId();
 		this.login = utilisateurDto.getLogin();
-		this.password = utilisateurDto.getPassword();
 	}
 
 	public String getLogin() {

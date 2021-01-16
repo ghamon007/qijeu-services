@@ -15,6 +15,8 @@ import com.game.qijeu.jpa.repository.UtilisateurRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = { "http://localhost:8090", "https://hamonavie.fr/api", "*" })
 public class UtilisateurController {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(UtilisateurController.class);
@@ -38,6 +41,9 @@ public class UtilisateurController {
 
 	@Autowired
 	ClientRepository clientRepository;
+
+	// @Autowired
+	// PasswordEncoder passwordEncoder;
 
 	/**
 	 * @PostMapping("/login") public Map<String, Object>
@@ -68,6 +74,7 @@ public class UtilisateurController {
 	@PostMapping("/create")
 	public UtilisateurDto saveUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
 		Utilisateur utilisateur = new Utilisateur(utilisateurDto);
+		/// utilisateur.setPassword(passwordEncoder.encode(utilisateurDto.getPassword()));
 		Optional<Parametre> aStatut = parametreRepository.findByCode(utilisateurDto.getCodeStatut());
 		utilisateur.setStatut(aStatut.isPresent() ? aStatut.get() : null);
 		Optional<Parametre> aProfil = parametreRepository.findByCode(utilisateurDto.getCodeProfil());
@@ -88,7 +95,7 @@ public class UtilisateurController {
 		Optional<Utilisateur> aUtilisateurPresent = utilisateurRepository.findById(id);
 		Utilisateur aUtilisateur = (aUtilisateurPresent.isPresent() ? aUtilisateurPresent.get() : new Utilisateur());
 		aUtilisateur.setLogin(newUtilisateur.getLogin());
-		aUtilisateur.setPassword(newUtilisateur.getPassword());
+		// aUtilisateur.setPassword(passwordEncoder.encode(newUtilisateur.getPassword()));
 
 		Optional<Parametre> aStatut = parametreRepository.findByCode(newUtilisateur.getCodeStatut());
 		Optional<Parametre> aProfil = parametreRepository.findByCode(newUtilisateur.getCodeProfil());

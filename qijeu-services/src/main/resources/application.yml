@@ -49,6 +49,7 @@ spring:
 #######################################
 #Activation du mode test et parametrage
 qijeu:
+  cors: "*"
   mode:
     test: true
   nb:

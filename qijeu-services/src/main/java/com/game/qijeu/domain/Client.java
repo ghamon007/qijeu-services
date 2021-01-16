@@ -27,7 +27,7 @@ public class Client extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_generator")
-	@SequenceGenerator(name = "client_generator", sequenceName = "seq_id_client", allocationSize = 50)
+	@SequenceGenerator(name = "client_generator", sequenceName = "seq_id_client", allocationSize = 1)
 	private Long id;
 
 	@Column(nullable = false, length = 50)
