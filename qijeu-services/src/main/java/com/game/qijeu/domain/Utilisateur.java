@@ -34,6 +34,8 @@ public class Utilisateur extends BaseEntity {
 	@Column(nullable = false)
 	private String password;
 
+	private String token;
+
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "profil_id_fkey"))
 	private Parametre profil;
@@ -107,6 +109,14 @@ public class Utilisateur extends BaseEntity {
 
 	public void setClient(Client client) {
 		this.client = client;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }

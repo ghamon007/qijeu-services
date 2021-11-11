@@ -855,3 +855,12 @@ databaseChangeLog:
                                   - column:
                                           name: statut_id
                                           value: 1
+      - changeSet:
+              id: QIJEUDB-040
+              author: Guillaume
+              changes:
+                - addColumn:
+                        tableName: utilisateur
+                        columns:
+                                name: token
+                                type: VARCHAR(255)

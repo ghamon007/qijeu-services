@@ -1,19 +1,20 @@
 package com.game.qijeu.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.game.qijeu.domain.Client;
 import com.game.qijeu.jpa.repository.ClientRepository;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @DataJpaTest
 public class ClientRepositoryTests {
 
@@ -34,7 +35,7 @@ public class ClientRepositoryTests {
 		List<Client> foundClients = clientRepository.findByNomIgnoreCaseStartingWith("Entreprise");
 	 
 	    // then
-		Assert.assertEquals(client1.getNom(), foundClients.get(0).getNom());
+		assertEquals(client1.getNom(), foundClients.get(0).getNom());
 		
 	}
 

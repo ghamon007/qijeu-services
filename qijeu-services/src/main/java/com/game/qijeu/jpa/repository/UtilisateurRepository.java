@@ -11,5 +11,7 @@ public interface UtilisateurRepository extends CrudRepository<Utilisateur, Long>
 
     public Optional<Utilisateur> findByLoginAndPassword(String login, String password);
 
+    public Optional<Utilisateur> findByToken(String token);
+
 
 }

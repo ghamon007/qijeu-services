@@ -5,18 +5,13 @@ import java.util.Calendar;
 import com.game.qijeu.domain.Client;
 import com.game.qijeu.domain.Competition;
 import com.game.qijeu.domain.Equipe;
-import com.game.qijeu.domain.Parametre;
 import com.game.qijeu.domain.QiJeu;
 import com.game.qijeu.domain.QiJeuResultat;
-import com.game.qijeu.domain.Utilisateur;
-import com.game.qijeu.exception.ParametreNotFoundException;
 import com.game.qijeu.jpa.repository.ClientRepository;
 import com.game.qijeu.jpa.repository.CompetitionRepository;
 import com.game.qijeu.jpa.repository.EquipeRepository;
-import com.game.qijeu.jpa.repository.ParametreRepository;
 import com.game.qijeu.jpa.repository.QiJeuRepository;
 import com.game.qijeu.jpa.repository.QiJeuResultatRepository;
-import com.game.qijeu.jpa.repository.UtilisateurRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +19,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.MultipartFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 class ConfigQiJeuServices {
@@ -67,11 +59,11 @@ class ConfigQiJeuServices {
     return multipartResolver;
   }
 
-  // @Bean
-  // public PasswordEncoder passwordEncoder() {
-  // PasswordEncoder encoder = new BCryptPasswordEncoder();
-  // return encoder;
-  // }
+   @Bean
+   public PasswordEncoder passwordEncoder() {
+   PasswordEncoder encoder = new BCryptPasswordEncoder();
+   return encoder;
+   }
 
   @Bean
   CommandLineRunner initDatabase(ClientRepository clientRepository, CompetitionRepository competitionRepository,
